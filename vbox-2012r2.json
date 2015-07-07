@@ -2,13 +2,16 @@
     "builders": [{
     "type": "virtualbox-iso",
     "guest_os_type": "Windows2012_64",
-    "iso_url": "./iso/win2k12r2.iso",
+    "iso_url": "iso/win2kr2.ISO",
     "iso_checksum": "b391a267949518ed6bb69f908f252076",
     "iso_checksum_type": "md5",
     "communicator": "winrm",
     "winrm_username": "vagrant",
     "winrm_password": "vagrant",
     "winrm_timeout": "30s",
-    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\""
+    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+    "floppy_files": [
+      "answer_files/2012_r2/Autounattend.xml"
+    ]
   }]
 }
