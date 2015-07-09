@@ -19,5 +19,10 @@
       "scripts/boxstarter.ps1",
       "scripts/package.ps1"
     ]
-  }]
+  }],
+    "post-processors": [
+    {
+      "type": "vagrant"
+    }
+  ]
 }
