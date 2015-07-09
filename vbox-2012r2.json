@@ -1,13 +1,17 @@
 {
     "builders": [{
     "type": "virtualbox-iso",
+    "vboxmanage": [
+      [ "modifyvm", "{{.Name}}", "--natpf1", "guest_winrm,tcp,,55985,,5985" ]
+    ],
     "guest_os_type": "Windows2012_64",
-    "iso_url": "iso/win2kr2.ISO",
-    "iso_checksum": "b391a267949518ed6bb69f908f252076",
+    "iso_url": "iso/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO",
+    "iso_checksum": "5b5e08c490ad16b59b1d9fab0def883a",
     "iso_checksum_type": "md5",
     "communicator": "winrm",
     "winrm_username": "vagrant",
     "winrm_password": "vagrant",
+    "winrm_port": "55985",
     "winrm_timeout": "30m",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
     "floppy_files": [
