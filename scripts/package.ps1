@@ -20,6 +20,7 @@ Get-WindowsFeature |
 Uninstall-WindowsFeature -Remove
 
 Install-WindowsUpdate -AcceptEula
+if(Test-PendingReboot){ Invoke-Reboot }
 
 Write-BoxstarterMessage "Cleaning SxS..."
 Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
