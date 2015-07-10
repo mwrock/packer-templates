@@ -2,7 +2,9 @@
     "builders": [{
     "type": "virtualbox-iso",
     "vboxmanage": [
-      [ "modifyvm", "{{.Name}}", "--natpf1", "guest_winrm,tcp,,55985,,5985" ]
+      [ "modifyvm", "{{.Name}}", "--natpf1", "guest_winrm,tcp,,55985,,5985" ],
+      [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
+      [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
     ],
     "guest_os_type": "Windows2012_64",
     "iso_url": "iso/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO",
@@ -12,7 +14,7 @@
     "winrm_username": "vagrant",
     "winrm_password": "vagrant",
     "winrm_port": "55985",
-    "winrm_timeout": "3h",
+    "winrm_timeout": "5h",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
     "floppy_files": [
       "answer_files/2012_r2/Autounattend.xml",
