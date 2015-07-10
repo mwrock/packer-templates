@@ -25,14 +25,14 @@ if(Test-PendingReboot){ Invoke-Reboot }
 Write-BoxstarterMessage "Cleaning SxS..."
 Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
 
+Write-BoxstarterMessage "defragging..."
+Optimize-Volume -DriveLetter C
+
 Write-BoxstarterMessage "0ing out empty space..."
 wget http://download.sysinternals.com/files/SDelete.zip -OutFile sdelete.zip
 [System.Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.FileSystem")
 [System.IO.Compression.ZipFile]::ExtractToDirectory("sdelete.zip", ".") 
 ./sdelete.exe /accepteula -z c: 
-
-Write-BoxstarterMessage "defragging..."
-Optimize-Volume -DriveLetter C
 
 Write-BoxstarterMessage "Setting up winrm"
 Set-NetFirewallRule -Name WINRM-HTTP-In-TCP-PUBLIC -RemoteAddress Any
