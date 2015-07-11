@@ -15,6 +15,7 @@
     "winrm_password": "vagrant",
     "winrm_port": "55985",
     "winrm_timeout": "5h",
+    "guest_additions_mode": "disable",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
     "floppy_files": [
       "answer_files/2012_r2/Autounattend.xml",
