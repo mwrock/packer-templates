@@ -1,3 +1,6 @@
+Remove-ItemProperty -Path $WinlogonPath -Name AutoAdminLogon
+Remove-ItemProperty -Path $WinlogonPath -Name DefaultUserName
+
 iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/mwrock/boxstarter/master/BuildScripts/bootstrapper.ps1'))
 Get-Boxstarter -Force
 
