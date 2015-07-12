@@ -27,7 +27,6 @@ Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
 
 @(
     "$env:appdata\Boxstarter",
-    "$env:localappdata\Boxstarter",
     "$env:localappdata\Nuget",
     "$env:localappdata\temp\*",
     "$env:windir\logs",
@@ -35,12 +34,12 @@ Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
     "$env:windir\temp\*",
     "$env:windir\system32\logfiles",
     "$env:windir\winsxs\manifestcache"
-    ) | % {
+) | % {
         if(Test-Path $_) {
             Write-BoxstarterMessage "Removing $_"
             Takeown /R /f $_
-            Icacls $_ /GRANT administrators:F /T
-            Remove-Item $_ -Recurse -Force | Out-Null
+            Icacls $_ /GRANT:r administrators:F /T /c /q  2>&1 | Out-Null
+            Remove-Item $_ -Recurse -Force -ErrorAction SilentlyContinue | Out-Null
         }
     }
 
@@ -61,3 +60,5 @@ Enable-PSRemoting -Force -SkipNetworkProfileCheck
 winrm set winrm/config/client/auth '@{Basic="true"}'
 winrm set winrm/config/service/auth '@{Basic="true"}'
 winrm set winrm/config/service '@{AllowUnencrypted="true"}'
+
+.C:\windows\system32\sysprep\sysprep.exe /generalize /oobe /unattend:myAnswerFile.xml /quiet /quit
