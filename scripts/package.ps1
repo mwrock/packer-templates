@@ -25,6 +25,25 @@ if(Test-PendingReboot){ Invoke-Reboot }
 Write-BoxstarterMessage "Cleaning SxS..."
 Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
 
+@(
+    "$env:appdata\Boxstarter",
+    "$env:localappdata\Boxstarter",
+    "$env:localappdata\Nuget",
+    "$env:localappdata\temp\*",
+    "$env:windir\logs",
+    "$env:windir\panther",
+    "$env:windir\temp\*",
+    "$env:windir\system32\logfiles",
+    "$env:windir\winsxs\manifestcache"
+    ) | % {
+        if(Test-Path $_) {
+            Write-BoxstarterMessage "Removing $_"
+            Takeown /R /f $_
+            Icacls $_ /GRANT administrators:F /T
+            Remove-Item $_ -Recurse -Force | Out-Null
+        }
+    }
+
 Write-BoxstarterMessage "defragging..."
 Optimize-Volume -DriveLetter C
 
@@ -32,7 +51,7 @@ Write-BoxstarterMessage "0ing out empty space..."
 wget http://download.sysinternals.com/files/SDelete.zip -OutFile sdelete.zip
 [System.Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.FileSystem")
 [System.IO.Compression.ZipFile]::ExtractToDirectory("sdelete.zip", ".") 
-./sdelete.exe /accepteula -z c: 
+./sdelete.exe /accepteula -z c:
 
 Write-BoxstarterMessage "Setting up winrm"
 Set-NetFirewallRule -Name WINRM-HTTP-In-TCP-PUBLIC -RemoteAddress Any
