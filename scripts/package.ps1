@@ -61,4 +61,5 @@ winrm set winrm/config/client/auth '@{Basic="true"}'
 winrm set winrm/config/service/auth '@{Basic="true"}'
 winrm set winrm/config/service '@{AllowUnencrypted="true"}'
 
-.C:\windows\system32\sysprep\sysprep.exe /generalize /oobe /unattend:myAnswerFile.xml /quiet /quit
+copy-item a:\postunattend.xml C:\Windows\Panther\Unattend\unattend.xml
+.C:\windows\system32\sysprep\sysprep.exe /generalize /oobe /unattend:C:\Windows\Panther\Unattend\unattend.xml /quiet /quit
