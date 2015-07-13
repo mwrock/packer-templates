@@ -38,7 +38,7 @@ Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
             Write-BoxstarterMessage "Removing $_"
             Takeown /d Y /R /f $_
             Icacls $_ /GRANT:r administrators:F /T /c /q  2>&1 | Out-Null
-            Remove-Item $_ -Recurse -Force -ErrorAction Stop | Out-Null
+            Remove-Item $_ -Recurse -Force -ErrorAction SilentlyContinue | Out-Null
         }
     }
 
@@ -51,6 +51,9 @@ wget http://download.sysinternals.com/files/SDelete.zip -OutFile sdelete.zip
 [System.IO.Compression.ZipFile]::ExtractToDirectory("sdelete.zip", ".") 
 ./sdelete.exe /accepteula -z c:
 
+mkdir C:\Windows\Panther\Unattend
+copy-item a:\postunattend.xml C:\Windows\Panther\Unattend\unattend.xml
+
 Write-BoxstarterMessage "Setting up winrm"
 Set-NetFirewallRule -Name WINRM-HTTP-In-TCP-PUBLIC -RemoteAddress Any
 Enable-WSManCredSSP -Force -Role Server
@@ -59,6 +62,3 @@ Enable-PSRemoting -Force -SkipNetworkProfileCheck
 winrm set winrm/config/client/auth '@{Basic="true"}'
 winrm set winrm/config/service/auth '@{Basic="true"}'
 winrm set winrm/config/service '@{AllowUnencrypted="true"}'
-
-mkdir C:\Windows\Panther\Unattend
-copy-item a:\postunattend.xml C:\Windows\Panther\Unattend\unattend.xml
