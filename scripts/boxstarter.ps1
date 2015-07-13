@@ -1,3 +1,4 @@
+$WinlogonPath = "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon"
 Remove-ItemProperty -Path $WinlogonPath -Name AutoAdminLogon
 Remove-ItemProperty -Path $WinlogonPath -Name DefaultUserName
 
