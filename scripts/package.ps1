@@ -26,7 +26,6 @@ Write-BoxstarterMessage "Cleaning SxS..."
 Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
 
 @(
-    "$env:appdata\Boxstarter",
     "$env:localappdata\Nuget",
     "$env:localappdata\temp\*",
     "$env:windir\logs",
@@ -37,9 +36,9 @@ Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
 ) | % {
         if(Test-Path $_) {
             Write-BoxstarterMessage "Removing $_"
-            Takeown /R /f $_
+            Takeown /d Y /R /f $_
             Icacls $_ /GRANT:r administrators:F /T /c /q  2>&1 | Out-Null
-            Remove-Item $_ -Recurse -Force -ErrorAction SilentlyContinue | Out-Null
+            Remove-Item $_ -Recurse -Force -ErrorAction Stop | Out-Null
         }
     }
 
@@ -61,5 +60,5 @@ winrm set winrm/config/client/auth '@{Basic="true"}'
 winrm set winrm/config/service/auth '@{Basic="true"}'
 winrm set winrm/config/service '@{AllowUnencrypted="true"}'
 
+mkdir C:\Windows\Panther\Unattend
 copy-item a:\postunattend.xml C:\Windows\Panther\Unattend\unattend.xml
-.C:\windows\system32\sysprep\sysprep.exe /generalize /oobe /unattend:C:\Windows\Panther\Unattend\unattend.xml /quiet /quit

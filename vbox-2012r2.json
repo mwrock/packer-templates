@@ -16,9 +16,11 @@
     "winrm_port": "55985",
     "winrm_timeout": "5h",
     "guest_additions_mode": "disable",
-    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+    "shutdown_command": "C:/windows/system32/sysprep/sysprep.exe /generalize /oobe /unattend:C:/Windows/Panther/Unattend/unattend.xml /quiet /shutdown",
+    "shutdown_timeout": "15m",
     "floppy_files": [
       "answer_files/2012_r2/Autounattend.xml",
+      "scripts/postunattend.xml",
       "scripts/boxstarter.ps1",
       "scripts/package.ps1"
     ]
