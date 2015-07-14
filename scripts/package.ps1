@@ -1,15 +1,9 @@
 Enable-RemoteDesktop
 Set-NetFirewallRule -Name RemoteDesktop-UserMode-In-TCP -Enabled True
 
-Write-BoxstarterMessage "Shrinking page file"
-$System = GWMI Win32_ComputerSystem -EnableAllPrivileges
-$System.AutomaticManagedPagefile = $False
-$System.Put()
-
-$CurrentPageFile = gwmi -query "select * from Win32_PageFileSetting where name='c:\\pagefile.sys'"
-$CurrentPageFile.InitialSize = 512
-$CurrentPageFile.MaximumSize = 512
-$CurrentPageFile.Put()
+Write-BoxstarterMessage "Removing page file"
+$pageFileMemoryKey = "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management"
+Set-ItemProperty -Path $pageFileMemoryKey -Name PagingFiles -Value "c:\pagefile.sys 0 0"
 
 Update-ExecutionPolicy -Policy Unrestricted
 
