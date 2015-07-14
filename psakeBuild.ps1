@@ -3,6 +3,7 @@ properties {
   $baseDir = $psake.build_script_dir
 }
 
+Task default -depends Build-Packer, prepare-hyperv, convert-tovhd, package-hyperv
 
 task build-packer {
   exec { packer build -force (Join-Path $baseDir vbox-2012r2.json) }
