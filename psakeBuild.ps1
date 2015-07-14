@@ -1,6 +1,6 @@
 $psake.use_exit_on_error = $true
 properties {
-  $baseDir = (Split-Path -parent $psake.build_script_dir)
+  $baseDir = $psake.build_script_dir
 }
 
 
@@ -27,6 +27,7 @@ task prepare-hyperv {
 task convert-tovhd {
   $vboxDisk = Resolve-Path "$baseDir\output-virtualbox-iso\*.vmdk"
   $hyperVDir = "$baseDir\hyper-v-output\Virtual Hard Disks"
+  $hyperVDisk = Join-Path $hyperVDir 'disk.vhd'
   ."$env:programfiles\oracle\VirtualBox\VBoxManage.exe" clonehd $vboxDisk $hyperVDisk --format vhd
 }
 
