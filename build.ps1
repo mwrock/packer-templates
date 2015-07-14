@@ -7,12 +7,12 @@ if(-not $env:ChocolateyInstall -or -not (Test-Path "$env:ChocolateyInstall")){
     iex ((new-object net.webclient).DownloadString("http://bit.ly/psChocInstall"))
 }
 
-if(!(Test-Path $env:ChocolateyInstall\lib\Psake*)) { cinst psake }
-if(!(Test-Path $env:ProgramFiles\Oracle\VirtualBox)) { cinst virtualbox }
-if(!(Test-Path $env:ChocolateyInstall\lib\WindowsAzurePowershell*)) { cinst WindowsAzurePowershell }
-if(!(Test-Path $env:ChocolateyInstall\lib\WindowsAzureLibsForNet*)) { cinst WindowsAzureLibsForNet }
-if(!(Get-Command vagrant -ErrorAction SilentlyContinue)) { cinst vagrant }
-if(!(Get-Command packer -ErrorAction SilentlyContinue)) { cinst packer }
+if(!(Test-Path $env:ChocolateyInstall\lib\Psake*)) { cinst psake -y }
+if(!(Test-Path $env:ProgramFiles\Oracle\VirtualBox)) { cinst virtualbox -y }
+if(!(Test-Path $env:ChocolateyInstall\lib\WindowsAzurePowershell*)) { cinst WindowsAzurePowershell -y }
+if(!(Test-Path $env:ChocolateyInstall\lib\WindowsAzureLibsForNet*)) { cinst WindowsAzureLibsForNet -y }
+if(!(Get-Command vagrant -ErrorAction SilentlyContinue)) { cinst vagrant -y }
+if(!(Get-Command packer -ErrorAction SilentlyContinue)) { cinst packer -y }
 
 $psakeDir = (dir $env:ChocolateyInstall\lib\Psake*)
 if($psakeDir.length -gt 0) {$psakerDir = $psakeDir[-1]}

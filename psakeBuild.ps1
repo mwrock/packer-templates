@@ -9,24 +9,24 @@ task build-packer {
 }
 
 task prepare-hyperv {
-    $vmPath = Join-Path $baseDir 'hyper-v-output' 'Virtual Machines' 'vm.xml'
+    $vmPath = "$baseDir\hyper-v-output\Virtual Machines\vm.xml"
     [xml]$vmXml = Get-Content $vmPath
     $vmXml.configuration.properties.name.'#text' = '2012R2Min'
     $vmXml.Save($vmPath)
 
-    $vboxDisk = Resolve-Path(Join-Path $baseDir 'output-virtualbox-iso' '*.vmdk')
-    $hyperVDir = Join-Path $baseDir 'hyper-v-output' 'Virtual Hard Disks'
+    $vboxDisk = Resolve-Path("$baseDir\output-virtualbox-iso\*.vmdk")
+    $hyperVDir = "$baseDir\hyper-v-output\Virtual Hard Disks"
     if(!(Test-Path $hyperVDir)) { mkdir $hyperVDir }
     $hyperVDisk = Join-Path $hyperVDir 'disk.vhd'
     if(Test-Path $hyperVDisk) { Remove-Item $hyperVDisk -Force }
-    $hyperVVagrantFile = Join-Path $baseDir 'hyper-v-output' 'Vagrantfile'
+    $hyperVVagrantFile = "$baseDir\hyper-v-output\Vagrantfile"
     if(Test-Path $hyperVVagrantFile) { Remove-Item $hyperVVagrantFile -Force }
     Copy-Item (Join-Path $baseDir vagrantfile-windows.template) $hyperVVagrantFile
 }
 
 task convert-tovhd {
-  $vboxDisk = Resolve-Path(Join-Path $baseDir 'output-virtualbox-iso' '*.vmdk')
-  $hyperVDir = Join-Path $baseDir 'hyper-v-output' 'Virtual Hard Disks'
+  $vboxDisk = Resolve-Path "$baseDir\output-virtualbox-iso\*.vmdk"
+  $hyperVDir = "$baseDir\hyper-v-output\Virtual Hard Disks"
   ."$env:programfiles\oracle\VirtualBox\VBoxManage.exe" clonehd $vboxDisk $hyperVDisk --format vhd
 }
 
@@ -36,7 +36,7 @@ task package-hyperv {
 }
 
 task Upload-Box {
-  $path = (join-path $baseDir "package-hyper-v.box")
+  $path = join-path $baseDir "package-hyper-v.box"
   $storageAccountKey = Get-AzureStorageKey wrock | %{ $_.Primary }
   $context = New-AzureStorageContext -StorageAccountName wrock -StorageAccountKey $storageAccountKey
   Set-AzureStorageBlobContent -Blob (Split-Path -Path $path -Leaf) -Container vhds -File $path -Context $context -Force
