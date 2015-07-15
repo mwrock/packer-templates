@@ -34,11 +34,11 @@ task convert-tovhd {
 
 task package-hyperv {
   ."$env:chocolateyInstall\tools\7za.exe" a -ttar (join-path $baseDir "package-hyper-v.tar") (Join-Path $baseDir "hyper-v-output\*")
-  ."$env:chocolateyInstall\tools\7za.exe" a -tgzip (join-path $baseDir "package-hyper-v.box") (join-path $baseDir "package-hyper-v.tar")
+  ."$env:chocolateyInstall\tools\7za.exe" a -tgzip (join-path $baseDir "package-hyper-v-$version.box") (join-path $baseDir "package-hyper-v.tar")
 }
 
 task Upload-Box {
-  $path = join-path $baseDir "package-hyper-v.box"
+  $path = join-path $baseDir "package-hyper-v-$version.box"
   $storageAccountKey = Get-AzureStorageKey wrock | %{ $_.Primary }
   $context = New-AzureStorageContext -StorageAccountName wrock -StorageAccountKey $storageAccountKey
   Set-AzureStorageBlobContent -Blob (Split-Path -Path $path -Leaf) -Container vhds -File $path -Context $context -Force
