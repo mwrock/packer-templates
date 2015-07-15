@@ -2,14 +2,9 @@ Enable-RemoteDesktop
 Set-NetFirewallRule -Name RemoteDesktop-UserMode-In-TCP -Enabled True
 
 Write-BoxstarterMessage "Removing page file"
-$System = GWMI Win32_ComputerSystem -EnableAllPrivileges
-$System.AutomaticManagedPagefile = $False
-$System.Put()
+$pageFileMemoryKey = "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management"
+Set-ItemProperty -Path $pageFileMemoryKey -Name PagingFiles -Value ""
 
-$CurrentPageFile = gwmi -query "select * from Win32_PageFileSetting where name='c:\\pagefile.sys'"
-$CurrentPageFile.InitialSize = 0
-$CurrentPageFile.MaximumSize = 0
-$CurrentPageFile.Put()
 Update-ExecutionPolicy -Policy Unrestricted
 
 Write-BoxstarterMessage "Removing unused features..."
@@ -51,10 +46,6 @@ wget http://download.sysinternals.com/files/SDelete.zip -OutFile sdelete.zip
 
 mkdir C:\Windows\Panther\Unattend
 copy-item a:\postunattend.xml C:\Windows\Panther\Unattend\unattend.xml
-
-$System = GWMI Win32_ComputerSystem -EnableAllPrivileges
-$System.AutomaticManagedPagefile = $True
-$System.Put()
 
 Write-BoxstarterMessage "Setting up winrm"
 Set-NetFirewallRule -Name WINRM-HTTP-In-TCP-PUBLIC -RemoteAddress Any
