@@ -25,7 +25,6 @@ Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
     "$env:windir\logs",
     "$env:windir\panther",
     "$env:windir\temp\*",
-    "$env:windir\system32\logfiles",
     "$env:windir\winsxs\manifestcache"
 ) | % {
         if(Test-Path $_) {
