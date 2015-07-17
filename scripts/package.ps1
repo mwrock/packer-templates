@@ -47,7 +47,7 @@ wget http://download.sysinternals.com/files/SDelete.zip -OutFile sdelete.zip
 mkdir C:\Windows\Panther\Unattend
 copy-item a:\postunattend.xml C:\Windows\Panther\Unattend\unattend.xml
 
-Write-BoxstarterMessage "Recreate [agefile after sysprep"
+Write-BoxstarterMessage "Recreate pagefile after sysprep"
 $System = GWMI Win32_ComputerSystem -EnableAllPrivileges
 $System.AutomaticManagedPagefile = $true
 $System.Put()
