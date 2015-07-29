@@ -32,6 +32,15 @@
       "keep_input_artifact": true,
       "output": "windows2012r2min-{{.Provider}}.box",
       "vagrantfile_template": "vagrantfile-windows.template"
+    },
+    {
+      "type": "atlas",
+      "artifact": "mwrock/Windows2012R2{{user `core`}}",
+      "artifact_type": "vagrant.box",
+      "metadata": {
+        "provider": "virtualbox",
+        "version": "0.1.0"
+      }
     }
   ],
   "variables": {
