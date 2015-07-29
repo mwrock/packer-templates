@@ -8,19 +8,19 @@
       [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
     ],
     "guest_os_type": "Windows2012_64",
-    "iso_url": "iso/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO",
-    "iso_checksum": "5b5e08c490ad16b59b1d9fab0def883a",
+    "iso_url": "{{ user `iso_url` }}",
+    "iso_checksum": "{{ user `iso_checksum` }}",
     "iso_checksum_type": "md5",
     "communicator": "winrm",
     "winrm_username": "vagrant",
     "winrm_password": "vagrant",
     "winrm_port": "55985",
-    "winrm_timeout": "5h",
+    "winrm_timeout": "6h",
     "guest_additions_mode": "disable",
     "shutdown_command": "C:/windows/system32/sysprep/sysprep.exe /generalize /oobe /unattend:C:/Windows/Panther/Unattend/unattend.xml /quiet /shutdown",
     "shutdown_timeout": "15m",
     "floppy_files": [
-      "answer_files/2012_r2/Autounattend.xml",
+      "answer_files/2012_r2{{user `core`}}/Autounattend.xml",
       "scripts/postunattend.xml",
       "scripts/boxstarter.ps1",
       "scripts/package.ps1"
@@ -33,5 +33,10 @@
       "output": "windows2012r2min-{{.Provider}}.box",
       "vagrantfile_template": "vagrantfile-windows.template"
     }
-  ]
+  ],
+  "variables": {
+    "core": "",
+    "iso_checksum": "5b5e08c490ad16b59b1d9fab0def883a",
+    "iso_url": "iso/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO"
+  }
 }
