@@ -20,6 +20,6 @@ packer build -force .\vbox-2012r2.json
 This repo includes powershell scripts that can create a Hyper-V vagrant box from the output virtualbox .vmdk file. This repo leverages [psake](https://github.com/psake/psake) and [chocolatey](https://chocolatey.org) to ensure that all prerequisites are installed and then runs the above packer command followed by the scripts needed to produce a vagrant .box file that can create a Hyper-V file.
 
 ## Troubleshooting Boxstarter package run
-[Boxstarter](http://boxstarter.org) is used as the means of proviioning. Due to the fact that provisioning takes place in the builder and not a provisioner, it can be difficult to gain vivibility into why things go wrong from the same console where poacker is invoked.
+[Boxstarter](http://boxstarter.org) is used as the means of provisioning. Due to the fact that provisioning takes place in the builder and not a provisioner, it can be difficult to gain visibility into why things go wrong from the same console where packer is invoked.
 
 Boxstarter will log all package activity output to `$env:LocalAppData\Boxstarter\boxstarter.log` on the guest.
