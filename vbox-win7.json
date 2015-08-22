@@ -1,0 +1,46 @@
+{
+    "builders": [{
+    "type": "virtualbox-iso",
+    "vboxmanage": [
+      [ "modifyvm", "{{.Name}}", "--natpf1", "winrm,tcp,,55985,,5985" ],
+      [ "modifyvm", "{{.Name}}", "--memory", "5632" ],
+      [ "modifyvm", "{{.Name}}", "--vram", "36" ],
+      [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
+    ],
+    "guest_os_type": "Windows7_64",
+    "iso_url": "{{ user `iso_url` }}",
+    "iso_checksum": "{{ user `iso_checksum` }}",
+    "iso_checksum_type": "md5",
+    "communicator": "winrm",
+    "winrm_username": "vagrant",
+    "winrm_password": "vagrant",
+    "ssh_skip_nat_mapping": "true",
+    "ssh_port": "55985",
+    "winrm_port": "55985",
+    "winrm_timeout": "10h",
+    "guest_additions_mode": "disable",
+    "shutdown_command": "C:/windows/system32/sysprep/sysprep.exe /generalize /oobe /unattend:C:/Windows/Panther/Unattend/unattend.xml /quiet /shutdown",
+    "shutdown_timeout": "15m",
+    "floppy_files": [
+      "answer_files/win7/Autounattend.xml",
+      "scripts/dotnet45.ps1",
+      "scripts/postunattendwin7.xml",
+      "scripts/boxstarter.ps1",
+      "scripts/boxstartwin7.bat",
+      "scripts/package.ps1",
+      "scripts/powershellv4.ps1"
+    ]
+  }],
+    "post-processors": [
+    {
+      "type": "vagrant",
+      "keep_input_artifact": true,
+      "output": "windows7-{{.Provider}}.box",
+      "vagrantfile_template": "vagrantfile-windows.template"
+    }
+  ],
+  "variables": {
+    "iso_checksum": "6467c3875955df4514395f0afcaaa62a",
+    "iso_url": "iso/en_windows_7_enterprise_with_sp1_x64_dvd_u_677651.iso"
+  }
+}
