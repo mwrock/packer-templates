@@ -24,8 +24,7 @@
       "answer_files/nano/Autounattend.xml",
       "scripts/nano_create.ps1",
       "scripts/SetupComplete.cmd",
-      "scripts/postunattend.ps1",
-      "scripts/winrm.ps1"
+      "scripts/postunattend.ps1"
     ]
   }],
     "provisioners": [

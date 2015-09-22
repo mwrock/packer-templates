@@ -32,7 +32,6 @@ bcdedit /set "{current}" path \windows\system32\boot\winload.exe
 mkdir E:\Windows\setup\scripts
 copy-item a:\postunattend.xml E:\Windows\Panther\unattend.xml -Force
 copy-item a:\SetupComplete.cmd E:\Windows\setup\scripts\SetupComplete.cmd -Force
-copy-item a:\winrm.ps1 E:\Windows\setup\scripts\winrm.ps1 -Force
 
 mkdir E:\sdelete
 cd E:\sdelete
