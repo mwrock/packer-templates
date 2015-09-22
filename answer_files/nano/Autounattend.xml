@@ -63,7 +63,7 @@
                     <InstallFrom>
                         <MetaData wcm:action="add">
                             <Key>/IMAGE/NAME </Key>
-                            <Value>Windows Server 2016 Technical Preview 3</Value>
+                            <Value>Windows Server 2012 R2 SERVERDATACENTERCORE</Value>
                         </MetaData>
                     </InstallFrom>
                     <InstallTo>

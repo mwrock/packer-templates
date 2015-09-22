@@ -44,7 +44,7 @@
             </UserAccounts>
           <FirstLogonCommands>
             <SynchronousCommand wcm:action="add">
-               <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\nano_cleanup.ps1</CommandLine>
+               <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File C:\Windows\Panther\Unattend\nano_cleanup.ps1</CommandLine>
                <Order>1</Order>
             </SynchronousCommand>
           </FirstLogonCommands>

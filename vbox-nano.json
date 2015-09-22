@@ -22,11 +22,21 @@
     "shutdown_timeout": "15m",
     "floppy_files": [
       "answer_files/nano/Autounattend.xml",
-      "scripts/postunattendNano.xml",
       "scripts/nano_create.ps1",
-      "scripts/nano_cleanup.ps1"      
+      "scripts/SetupComplete.cmd",
+      "scripts/postunattend.ps1",
+      "scripts/winrm.ps1"
     ]
   }],
+    "provisioners": [
+    {
+      "type": "windows-restart"
+    },
+    {
+      "type": "powershell",
+      "script": "./scripts/nano_cleanup.ps1"
+    }
+  ],
     "post-processors": [
     {
       "type": "vagrant",
