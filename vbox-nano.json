@@ -18,24 +18,16 @@
     "winrm_port": "55985",
     "winrm_timeout": "6h",
     "guest_additions_mode": "disable",
-    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+    "shutdown_command": "shutdown /r /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
     "shutdown_timeout": "15m",
     "floppy_files": [
       "answer_files/nano/Autounattend.xml",
       "scripts/nano_create.ps1",
+      "scripts/nano_cleanup.ps1",
       "scripts/SetupComplete.cmd",
       "scripts/postunattend.ps1"
     ]
   }],
-    "provisioners": [
-    {
-      "type": "windows-restart"
-    },
-    {
-      "type": "powershell",
-      "script": "./scripts/nano_cleanup.ps1"
-    }
-  ],
     "post-processors": [
     {
       "type": "vagrant",

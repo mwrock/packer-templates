@@ -25,19 +25,14 @@ Copy-Item `
   -Exclude "System Volume Information" `
   -ErrorAction SilentlyContinue
 
-bcdedit /set "{current}" device "partition=E:"
-bcdedit /set "{current}" osdevice "partition=E:"
-bcdedit /set "{current}" path \windows\system32\boot\winload.exe
-
 mkdir E:\Windows\setup\scripts
 copy-item a:\postunattend.xml E:\Windows\Panther\unattend.xml -Force
 copy-item a:\SetupComplete.cmd E:\Windows\setup\scripts\SetupComplete.cmd -Force
+copy-item a:\nano_cleanup.ps1 E:\Windows\setup\scripts\nano_cleanup.ps1 -Force
 
-mkdir E:\sdelete
-cd E:\sdelete
-Invoke-Webrequest http://download.sysinternals.com/files/SDelete.zip -OutFile sdelete.zip
-[System.Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.FileSystem")
-[System.IO.Compression.ZipFile]::ExtractToDirectory('e:\sdelete\sdelete.zip', 'e:\sdelete') 
+bcdedit /set "{current}" device "partition=E:"
+bcdedit /set "{current}" osdevice "partition=E:"
+bcdedit /set "{current}" path \windows\system32\boot\winload.exe
 
 winrm set winrm/config/client/auth '@{Basic="true"}'
 winrm set winrm/config/service/auth '@{Basic="true"}'
