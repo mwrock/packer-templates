@@ -22,7 +22,7 @@ Copy-Item `
   -Destination "E:\" `
   -Force `
   -Recurse `
-  -Exclude "System Volume Information" `
+  -Exclude @("System Volume Information", "bootmgr") `
   -ErrorAction SilentlyContinue
 
 mkdir E:\Windows\setup\scripts
