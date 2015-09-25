@@ -2,7 +2,7 @@ iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.co
 Enable-Net40
 
 $task = "C:\Windows\System32\schtasks.exe"
-&$task /Create /TN "setup_boxstarter" /SC ONLOGON /TR "a:\boxstartwin7.bat" /RL HIGHEST
+&$task /Create /TN "setup_boxstarter" /SC ONLOGON /TR "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy ByPass -File a:\boxstarter.ps1" /RL HIGHEST
 
 $exe = "C:\Windows\System32\shutdown.exe"
 &$exe /t 30 /r

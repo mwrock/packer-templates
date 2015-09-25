@@ -26,9 +26,7 @@
       "scripts/dotnet45.ps1",
       "scripts/postunattendwin7.xml",
       "scripts/boxstarter.ps1",
-      "scripts/boxstartwin7.bat",
-      "scripts/package.ps1",
-      "scripts/powershellv4.ps1"
+      "scripts/package.ps1"
     ]
   }],
     "post-processors": [

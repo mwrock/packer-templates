@@ -1,10 +1,15 @@
 $OS = Get-WmiObject -Class win32_OperatingSystem -namespace "root\CIMV2"
 
+function Check-Command($cmdname)
+{
+    return [bool](Get-Command -Name $cmdname -ErrorAction SilentlyContinue)
+}
+
 Enable-RemoteDesktop
-if ($OS.Version -eq "6.1.7601") {
-    C:\Windows\System32\netsh.exe advfirewall firewall add rule name="Remote Desktop" dir=in localport=3389 protocol=TCP action=allow
-    } else {
+if (Check-Command -cmdname 'Set-NetFirewallRule') {
     Set-NetFirewallRule -Name RemoteDesktop-UserMode-In-TCP -Enabled True
+    } else {
+    C:\Windows\System32\netsh.exe advfirewall firewall add rule name="Remote Desktop" dir=in localport=3389 protocol=TCP action=allow
 }
 
 Write-BoxstarterMessage "Removing page file"
@@ -13,8 +18,7 @@ Set-ItemProperty -Path $pageFileMemoryKey -Name PagingFiles -Value ""
 
 Update-ExecutionPolicy -Policy Unrestricted
 
-# cmdlet not available in win 7
-if ($OS.Version -ne "6.1.7601") {
+if (Check-Command -cmdname 'Uninstall-WindowsFeature') {
     Write-BoxstarterMessage "Removing unused features..."
     Remove-WindowsFeature -Name 'Powershell-ISE'
     Get-WindowsFeature | 
@@ -22,15 +26,8 @@ if ($OS.Version -ne "6.1.7601") {
     Uninstall-WindowsFeature -Remove
 }
 
-if ($OS.Version -eq "6.1.7601") {
-    # Skipping updates specific to Win10 upgrade & telemetry noted at:
-    # https://github.com/bmrf/tron/blob/d7c8e00a4300bcffa6095aa9361850f7430fd3d2/tron.bat#L1301-L1326
-    # (KB971033/KB2952664/KB3021917/KB3068708/KB3075249/KB3080149)
-    # This should prevent the 3+GiB KB3035583 from being downloaded
-    Install-WindowsUpdate -criteria "IsHidden=0 and IsInstalled=0 and Type='Software' and BrowseOnly=0 and UpdateID!='62c68477-0f45-46aa-8af8-d0c189d6dd8e' and UpdateID!='761d6bfd-33b5-4988-9d0c-417f0284168f' and UpdateID!='89febea4-e23a-4ff5-9ca9-d4fc9e768a70' and UpdateID!='0cd9efd9-d371-4e7d-8381-15ae5b55ea79' and UpdateID!='6cc5cc49-03a2-4609-882e-7889c547814e' and UpdateID!='48aa5065-93fc-4cc8-b071-80cb1da35f7b'" -AcceptEula
-    } else {
-    Install-WindowsUpdate -AcceptEula
-}
+
+Install-WindowsUpdate -AcceptEula
 if(Test-PendingReboot){ Invoke-Reboot }
 
 Write-BoxstarterMessage "Cleaning SxS..."
@@ -53,18 +50,37 @@ Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
     }
 
 Write-BoxstarterMessage "defragging..."
-if ($OS.Version -eq "6.1.7601") {
-    Defrag.exe c: /H
-    } else {
+if (Check-Command -cmdname 'Optimize-Volume') {
     Optimize-Volume -DriveLetter C
+    } else {
+    Defrag.exe c: /H
 }
 
 
 Write-BoxstarterMessage "0ing out empty space..."
-wget http://download.sysinternals.com/files/SDelete.zip -OutFile sdelete.zip
-[System.Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.FileSystem")
-[System.IO.Compression.ZipFile]::ExtractToDirectory("sdelete.zip", ".") 
-./sdelete.exe /accepteula -z c:
+if (Check-Command -cmdname 'wget') {
+    wget http://download.sysinternals.com/files/SDelete.zip -OutFile sdelete.zip
+    [System.Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.FileSystem")
+    [System.IO.Compression.ZipFile]::ExtractToDirectory("sdelete.zip", ".")
+    ./sdelete.exe /accepteula -z c:
+    } else {
+    $url = "http://download.sysinternals.com/files/SDelete.zip"
+    $file = "$env:temp\sdelete.zip"
+    if(Test-Path $file){Remove-Item $file -Force}
+    $downloader=new-object net.webclient
+    $wp=[system.net.WebProxy]::GetDefaultProxy()
+    $wp.UseDefaultCredentials=$true
+    $downloader.Proxy=$wp
+    $downloader.DownloadFile($url, $file)
+    $shell = new-object -com shell.application
+    $zip = $shell.NameSpace($file)
+    foreach($item in $zip.items())
+    {
+    $shell.Namespace("$env:temp").copyhere($item)
+    }
+    $sdelcommand = "$env:temp\sdelete.exe /accepteula -z c:"
+    iex "& $sdelcommand"
+}
 
 mkdir C:\Windows\Panther\Unattend
 if ($OS.Version -eq "6.1.7601") {
@@ -79,14 +95,18 @@ $System.AutomaticManagedPagefile = $true
 $System.Put()
 
 Write-BoxstarterMessage "Setting up winrm"
-if ($OS.Version -eq "6.1.7601") {
-    C:\Windows\System32\netsh.exe advfirewall firewall add rule name="WinRM-HTTP" dir=in localport=5985 protocol=TCP action=allow
-    } else {
+if (Check-Command -cmdname 'Set-NetFirewallRule') {
     Set-NetFirewallRule -Name WINRM-HTTP-In-TCP-PUBLIC -RemoteAddress Any
+    } else {
+    C:\Windows\System32\netsh.exe advfirewall firewall add rule name="WinRM-HTTP" dir=in localport=5985 protocol=TCP action=allow
 }
 
 if ($OS.Version -eq "6.1.7601") {
-    Enable-PSRemoting -Force -SkipNetworkProfileCheck
+    if (Test-Path "C:\Windows\System32\WindowsPowerShell\v1.0\pspluginwkr-v3.dll"){
+        Enable-PSRemoting -Force -SkipNetworkProfileCheck
+        } else {
+        Enable-PSRemoting -Force
+        }
     Enable-WSManCredSSP -Force -Role Server
     } else {
     Enable-WSManCredSSP -Force -Role Server
