@@ -5,7 +5,8 @@
       [ "modifyvm", "{{.Name}}", "--natpf1", "guest_winrm,tcp,,55985,,5985" ],
       [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
       [ "modifyvm", "{{.Name}}", "--vram", "36" ],
-      [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
+      [ "modifyvm", "{{.Name}}", "--cpus", "2" ],
+      [ "modifyvm", "{{.Name}}", "--hardwareuuid", "02f110e7-369a-4bbc-bbe6-6f0b6864ccb6" ]
     ],
     "guest_os_type": "Windows2012_64",
     "iso_url": "{{ user `iso_url` }}",
@@ -33,7 +34,7 @@
       "type": "vagrant",
       "keep_input_artifact": true,
       "output": "windowsNano-{{.Provider}}.box",
-      "vagrantfile_template": "vagrantfile-windows.template"
+      "vagrantfile_template": "vagrantfile-windows-nano.template"
     },
     {
       "type": "atlas",
