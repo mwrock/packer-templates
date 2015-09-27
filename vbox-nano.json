@@ -26,7 +26,7 @@
       "scripts/nano_create.ps1",
       "scripts/nano_cleanup.ps1",
       "scripts/SetupComplete.cmd",
-      "scripts/postunattend.ps1"
+      "scripts/postunattend.xml"
     ]
   }],
     "post-processors": [
