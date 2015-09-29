@@ -16,6 +16,8 @@ You may invoke packer to run the template with:
 packer build -force .\vbox-2012r2.json
 ```
 
+You will need to remove the atlas post processor for now. There is [an issue](https://github.com/mitchellh/packer/issues/2679) open proposing a new CLI switch to bypass post processors.
+
 ## Converting to Hyper-V
 This repo includes powershell scripts that can create a Hyper-V vagrant box from the output virtualbox .vmdk file. This repo leverages [psake](https://github.com/psake/psake) and [chocolatey](https://chocolatey.org) to ensure that all prerequisites are installed and then runs the above packer command followed by the scripts needed to produce a vagrant .box file that can create a Hyper-V file.
 
