@@ -18,6 +18,7 @@
     "winrm_password": "vagrant",
     "winrm_timeout": "6h",
     "guest_additions_mode": "disable",
+    "headless": "{{ user `headless` }}",    
     "shutdown_command": "shutdown /r /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
     "shutdown_timeout": "15m",
     "floppy_files": [
@@ -46,6 +47,7 @@
     }
   ],
   "variables": {
+    "headless": "true",
     "iso_checksum": "7003c2a4f9abe672c570ff018fbf3a27",
     "iso_url": "http://care.dlservice.microsoft.com/dl/download/7/3/C/73C250BE-67C4-440B-A69B-D0E8EE77F01C/10514.0.150808-1529.TH2_RELEASE_SERVER_OEMRET_X64FRE_EN-US.ISO"
   }
