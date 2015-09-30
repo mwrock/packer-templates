@@ -43,8 +43,8 @@
     }
   ],
   "variables": {
-    "core": "",
-    "iso_checksum": "5b5e08c490ad16b59b1d9fab0def883a",
-    "iso_url": "iso/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO"
+    "core": "sha1",
+    "iso_checksum": "849734f37346385dac2c101e4aacba4626bb141c",
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO"
   }
 }
