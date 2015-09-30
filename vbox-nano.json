@@ -19,7 +19,7 @@
     "winrm_timeout": "6h",
     "guest_additions_mode": "disable",
     "shutdown_command": "shutdown /r /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
-    "shutdown_timeout": "15m",
+    "shutdown_timeout": "1h",
     "floppy_files": [
       "answer_files/nano/Autounattend.xml",
       "scripts/nano_create.ps1",
@@ -37,7 +37,7 @@
     },
     {
       "type": "atlas",
-      "artifact": "mwrock/WindowsNano",
+      "artifact": "mwrock/WindowsNanoTest",
       "artifact_type": "vagrant.box",
       "metadata": {
         "provider": "virtualbox",
@@ -47,6 +47,6 @@
   ],
   "variables": {
     "iso_checksum": "7003c2a4f9abe672c570ff018fbf3a27",
-    "iso_url": "iso/10514.0.150808-1529.TH2_RELEASE_SERVER_OEMRET_X64FRE_EN-US.ISO"
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/7/3/C/73C250BE-67C4-440B-A69B-D0E8EE77F01C/10514.0.150808-1529.TH2_RELEASE_SERVER_OEMRET_X64FRE_EN-US.ISO"
   }
 }
