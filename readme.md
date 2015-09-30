@@ -6,6 +6,7 @@ This repo and much of its cotent is covered in detail from [this blog post](http
 ## Prerequisites
 
 In order to run the template, you will need the following:
+
 1. [Packer](https://packer.io/docs/installation.html) installed with a minimum version of 0.8.6.
 2. [Virtualbox](https://www.virtualbox.org/wiki/Downloads)
 
