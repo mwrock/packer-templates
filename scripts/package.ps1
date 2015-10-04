@@ -1,5 +1,3 @@
-$OS = Get-WmiObject -Class win32_OperatingSystem -namespace "root\CIMV2"
-
 function Check-Command($cmdname)
 {
     return [bool](Get-Command -Name $cmdname -ErrorAction SilentlyContinue)
