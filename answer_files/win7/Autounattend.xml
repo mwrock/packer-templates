@@ -86,7 +86,7 @@
             <OOBE>
                 <HideEULAPage>true</HideEULAPage>
                 <NetworkLocation>Work</NetworkLocation>
-                <ProtectYourPC>1</ProtectYourPC>
+                <ProtectYourPC>3</ProtectYourPC>
                 <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
             </OOBE>
             <UserAccounts>
