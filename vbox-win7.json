@@ -20,8 +20,7 @@
     "shutdown_timeout": "15m",
     "floppy_files": [
       "answer_files/win7/Autounattend.xml",
-      "scripts/dotnet45.ps1",
-      "scripts/postunattendwin7.xml",
+      "scripts/postunattend.xml",
       "scripts/boxstarter.ps1",
       "scripts/package.ps1"
     ]
