@@ -6,11 +6,7 @@ function Check-Command($cmdname)
 }
 
 Enable-RemoteDesktop
-if (Check-Command -cmdname 'Set-NetFirewallRule') {
-    Set-NetFirewallRule -Name RemoteDesktop-UserMode-In-TCP -Enabled True
-    } else {
-    C:\Windows\System32\netsh.exe advfirewall firewall add rule name="Remote Desktop" dir=in localport=3389 protocol=TCP action=allow
-}
+netsh advfirewall firewall add rule name="Remote Desktop" dir=in localport=3389 protocol=TCP action=allow
 
 Write-BoxstarterMessage "Removing page file"
 $pageFileMemoryKey = "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management"
@@ -83,11 +79,7 @@ if (Check-Command -cmdname 'wget') {
 }
 
 mkdir C:\Windows\Panther\Unattend
-if ($OS.Version -eq "6.1.7601") {
-    copy-item a:\postunattendwin7.xml C:\Windows\Panther\Unattend\unattend.xml
-    } else {
-    copy-item a:\postunattend.xml C:\Windows\Panther\Unattend\unattend.xml
-}
+copy-item a:\postunattend.xml C:\Windows\Panther\Unattend\unattend.xml
 
 Write-BoxstarterMessage "Recreate pagefile after sysprep"
 $System = GWMI Win32_ComputerSystem -EnableAllPrivileges
@@ -95,24 +87,17 @@ $System.AutomaticManagedPagefile = $true
 $System.Put()
 
 Write-BoxstarterMessage "Setting up winrm"
-if (Check-Command -cmdname 'Set-NetFirewallRule') {
-    Set-NetFirewallRule -Name WINRM-HTTP-In-TCP-PUBLIC -RemoteAddress Any
-    } else {
-    C:\Windows\System32\netsh.exe advfirewall firewall add rule name="WinRM-HTTP" dir=in localport=5985 protocol=TCP action=allow
-}
+netsh advfirewall firewall add rule name="WinRM-HTTP" dir=in localport=5985 protocol=TCP action=allow
 
-if ($OS.Version -eq "6.1.7601") {
-    if (Test-Path "C:\Windows\System32\WindowsPowerShell\v1.0\pspluginwkr-v3.dll"){
-        Enable-PSRemoting -Force -SkipNetworkProfileCheck
-        } else {
-        Enable-PSRemoting -Force
-        }
-    Enable-WSManCredSSP -Force -Role Server
-    } else {
-    Enable-WSManCredSSP -Force -Role Server
+Enable-WSManCredSSP -Force -Role Server
 
-    Enable-PSRemoting -Force -SkipNetworkProfileCheck
+$enableArgs=@{Force=$true}
+$command=Get-Command Enable-PSRemoting
+if($command.Parameters.Keys -contains "skipnetworkprofilecheck"){
+    $enableArgs.skipnetworkprofilecheck=$true
 }
+Enable-PSRemoting @enableArgs
+
 winrm set winrm/config/client/auth '@{Basic="true"}'
 winrm set winrm/config/service/auth '@{Basic="true"}'
 winrm set winrm/config/service '@{AllowUnencrypted="true"}'

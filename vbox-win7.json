@@ -3,20 +3,17 @@
     "type": "virtualbox-iso",
     "vboxmanage": [
       [ "modifyvm", "{{.Name}}", "--natpf1", "winrm,tcp,,55985,,5985" ],
-      [ "modifyvm", "{{.Name}}", "--memory", "5632" ],
+      [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
       [ "modifyvm", "{{.Name}}", "--vram", "36" ],
       [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
     ],
     "guest_os_type": "Windows7_64",
     "iso_url": "{{ user `iso_url` }}",
     "iso_checksum": "{{ user `iso_checksum` }}",
-    "iso_checksum_type": "md5",
+    "iso_checksum_type": "sha1",
     "communicator": "winrm",
     "winrm_username": "vagrant",
     "winrm_password": "vagrant",
-    "ssh_skip_nat_mapping": "true",
-    "ssh_port": "55985",
-    "winrm_port": "55985",
     "winrm_timeout": "10h",
     "guest_additions_mode": "disable",
     "shutdown_command": "C:/windows/system32/sysprep/sysprep.exe /generalize /oobe /unattend:C:/Windows/Panther/Unattend/unattend.xml /quiet /shutdown",
@@ -38,7 +35,7 @@
     }
   ],
   "variables": {
-    "iso_checksum": "6467c3875955df4514395f0afcaaa62a",
-    "iso_url": "iso/en_windows_7_enterprise_with_sp1_x64_dvd_u_677651.iso"
+    "iso_checksum": "15ddabafa72071a06d5213b486a02d5b55cb7070",
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/evalx/win7/x64/EN/7600.16385.090713-1255_x64fre_enterprise_en-us_EVAL_Eval_Enterprise-GRMCENXEVAL_EN_DVD.iso",
   }
 }

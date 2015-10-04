@@ -115,7 +115,7 @@
             <FirstLogonCommands>
                 <SynchronousCommand wcm:action="add">
                     <Order>1</Order>
-                    <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy ByPass -File a:\dotnet45.ps1</CommandLine>
+                   <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\boxstarter.ps1</CommandLine>
                 </SynchronousCommand>
             </FirstLogonCommands>
         </component>
