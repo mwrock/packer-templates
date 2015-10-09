@@ -1,6 +1,15 @@
+$ErrorActionPreference = "Stop"
+
 function Check-Command($cmdname)
 {
-    return [bool](Get-Command -Name $cmdname -ErrorAction SilentlyContinue)
+    try {
+      Get-Command -Name $cmdname
+      return $true
+    }
+    catch {
+      $global:error.RemoveAt(0)
+      return $false
+    }
 }
 
 Enable-RemoteDesktop
@@ -21,7 +30,7 @@ if (Check-Command -cmdname 'Uninstall-WindowsFeature') {
 }
 
 
-Install-WindowsUpdate -AcceptEula
+# Install-WindowsUpdate -AcceptEula
 if(Test-PendingReboot){ Invoke-Reboot }
 
 Write-BoxstarterMessage "Cleaning SxS..."
@@ -37,9 +46,11 @@ Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
 ) | % {
         if(Test-Path $_) {
             Write-BoxstarterMessage "Removing $_"
-            Takeown /d Y /R /f $_
-            Icacls $_ /GRANT:r administrators:F /T /c /q  2>&1 | Out-Null
-            Remove-Item $_ -Recurse -Force -ErrorAction SilentlyContinue | Out-Null
+            try {
+              Takeown /d Y /R /f $_
+              Icacls $_ /GRANT:r administrators:F /T /c /q  2>&1 | Out-Null
+              Remove-Item $_ -Recurse -Force | Out-Null 
+            } catch { $global:error.RemoveAt(0) }
         }
     }
 
@@ -50,52 +61,56 @@ if (Check-Command -cmdname 'Optimize-Volume') {
     Defrag.exe c: /H
 }
 
-
 Write-BoxstarterMessage "0ing out empty space..."
-if (Check-Command -cmdname 'wget') {
-    wget http://download.sysinternals.com/files/SDelete.zip -OutFile sdelete.zip
-    [System.Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.FileSystem")
-    [System.IO.Compression.ZipFile]::ExtractToDirectory("sdelete.zip", ".")
-    ./sdelete.exe /accepteula -z c:
-    } else {
-    $url = "http://download.sysinternals.com/files/SDelete.zip"
-    $file = "$env:temp\sdelete.zip"
-    if(Test-Path $file){Remove-Item $file -Force}
-    $downloader=new-object net.webclient
-    $wp=[system.net.WebProxy]::GetDefaultProxy()
-    $wp.UseDefaultCredentials=$true
-    $downloader.Proxy=$wp
-    $downloader.DownloadFile($url, $file)
-    $shell = new-object -com shell.application
-    $zip = $shell.NameSpace($file)
-    foreach($item in $zip.items())
-    {
-    $shell.Namespace("$env:temp").copyhere($item)
+$FilePath="c:\zero.tmp"
+$Volume = Get-WmiObject win32_logicaldisk -filter "DeviceID='C:'"
+$ArraySize= 64kb
+$SpaceToLeave= $Volume.Size * 0.05
+$FileSize= $Volume.FreeSpace - $SpacetoLeave
+$ZeroArray= new-object byte[]($ArraySize)
+ 
+$Stream= [io.File]::OpenWrite($FilePath)
+try {
+   $CurFileSize = 0
+    while($CurFileSize -lt $FileSize) {
+        $Stream.Write($ZeroArray,0, $ZeroArray.Length)
+        $CurFileSize +=$ZeroArray.Length
     }
-    $sdelcommand = "$env:temp\sdelete.exe /accepteula -z c:"
-    iex "& $sdelcommand"
 }
+finally {
+    if($Stream) {
+        $Stream.Close()
+    }
+}
+ 
+Del $FilePath
 
 mkdir C:\Windows\Panther\Unattend
 copy-item a:\postunattend.xml C:\Windows\Panther\Unattend\unattend.xml
 
 Write-BoxstarterMessage "Recreate pagefile after sysprep"
 $System = GWMI Win32_ComputerSystem -EnableAllPrivileges
-$System.AutomaticManagedPagefile = $true
-$System.Put()
+if ($system -ne $null) {
+  $System.AutomaticManagedPagefile = $true
+  $System.Put()
+}
 
 Write-BoxstarterMessage "Setting up winrm"
 netsh advfirewall firewall add rule name="WinRM-HTTP" dir=in localport=5985 protocol=TCP action=allow
 
-Enable-WSManCredSSP -Force -Role Server
-
 $enableArgs=@{Force=$true}
-$command=Get-Command Enable-PSRemoting
-if($command.Parameters.Keys -contains "skipnetworkprofilecheck"){
-    $enableArgs.skipnetworkprofilecheck=$true
+try {
+ $command=Get-Command Enable-PSRemoting
+  if($command.Parameters.Keys -contains "skipnetworkprofilecheck"){
+      $enableArgs.skipnetworkprofilecheck=$true
+  }
+}
+catch {
+  $global:error.RemoveAt(0)
 }
 Enable-PSRemoting @enableArgs
-
+Enable-WSManCredSSP -Force -Role Server
 winrm set winrm/config/client/auth '@{Basic="true"}'
 winrm set winrm/config/service/auth '@{Basic="true"}'
 winrm set winrm/config/service '@{AllowUnencrypted="true"}'
+Write-BoxstarterMessage "winrm setup complete"

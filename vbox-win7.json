@@ -3,7 +3,7 @@
     "type": "virtualbox-iso",
     "vboxmanage": [
       [ "modifyvm", "{{.Name}}", "--natpf1", "winrm,tcp,,55985,,5985" ],
-      [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
+      [ "modifyvm", "{{.Name}}", "--memory", "4096" ],
       [ "modifyvm", "{{.Name}}", "--vram", "36" ],
       [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
     ],
@@ -20,7 +20,7 @@
     "shutdown_timeout": "15m",
     "floppy_files": [
       "answer_files/win7/Autounattend.xml",
-      "scripts/postunattend.xml",
+      "answer_files/win7/postunattend.xml",
       "scripts/boxstarter.ps1",
       "scripts/package.ps1"
     ]
@@ -35,6 +35,6 @@
   ],
   "variables": {
     "iso_checksum": "15ddabafa72071a06d5213b486a02d5b55cb7070",
-    "iso_url": "http://care.dlservice.microsoft.com/dl/download/evalx/win7/x64/EN/7600.16385.090713-1255_x64fre_enterprise_en-us_EVAL_Eval_Enterprise-GRMCENXEVAL_EN_DVD.iso"
+    "iso_url": "iso/en_windows_7_ultimate_with_sp1_x64_dvd_u_677332.iso"
   }
 }
