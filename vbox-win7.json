@@ -12,6 +12,7 @@
     "iso_checksum": "{{ user `iso_checksum` }}",
     "iso_checksum_type": "sha1",
     "communicator": "winrm",
+    "headless": "{{ user `headless` }}",    
     "winrm_username": "vagrant",
     "winrm_password": "vagrant",
     "winrm_timeout": "10h",
@@ -34,6 +35,7 @@
     }
   ],
   "variables": {
+    "headless": "false",
     "iso_checksum": "36ae90defbad9d9539e649b193ae573b77a71c83",
     "iso_url": "iso/en_windows_7_ultimate_with_sp1_x64_dvd_u_677332.iso"
   }
