@@ -15,10 +15,6 @@ function Check-Command($cmdname)
 Enable-RemoteDesktop
 netsh advfirewall firewall add rule name="Remote Desktop" dir=in localport=3389 protocol=TCP action=allow
 
-Write-BoxstarterMessage "Removing page file"
-$pageFileMemoryKey = "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management"
-Set-ItemProperty -Path $pageFileMemoryKey -Name PagingFiles -Value ""
-
 Update-ExecutionPolicy -Policy Unrestricted
 
 if (Check-Command -cmdname 'Uninstall-WindowsFeature') {
@@ -30,7 +26,12 @@ if (Check-Command -cmdname 'Uninstall-WindowsFeature') {
 }
 
 
-# Install-WindowsUpdate -AcceptEula
+Install-WindowsUpdate -AcceptEula
+
+Write-BoxstarterMessage "Removing page file"
+$pageFileMemoryKey = "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management"
+Set-ItemProperty -Path $pageFileMemoryKey -Name PagingFiles -Value ""
+
 if(Test-PendingReboot){ Invoke-Reboot }
 
 Write-BoxstarterMessage "Cleaning SxS..."
