@@ -16,7 +16,6 @@
     "winrm_username": "vagrant",
     "winrm_password": "vagrant",
     "winrm_timeout": "24h",
-    "guest_additions_mode": "disable",
     "shutdown_command": "C:/windows/system32/sysprep/sysprep.exe /generalize /oobe /unattend:C:/Windows/Panther/Unattend/unattend.xml /quiet /shutdown",
     "shutdown_timeout": "15m",
     "floppy_files": [
