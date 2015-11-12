@@ -72,11 +72,11 @@
     {
       "type": "atlas",
       "only": ["virtualbox-iso-atlas"],
-      "artifact": "mwrock/WindowsNanoTest",
+      "artifact": "mwrock/WindowsNano",
       "artifact_type": "vagrant.box",
       "metadata": {
         "provider": "virtualbox",
-        "version": "0.1.0"
+        "version": "0.1.1"
       }
     }
   ],
