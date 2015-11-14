@@ -1,17 +1,21 @@
 $ErrorActionPreference = "Stop"
-
 . a:\Test-Command.ps1
 
+Write-Host "Enabling file sharing firewale rules"
 netsh advfirewall firewall set rule group="File and Printer Sharing" new enable=yes
 
-certutil -addstore -f "TrustedPublisher" A:\oracle.cer
+if(Test-Path "C:\Users\vagrant\VBoxGuestAdditions.iso") {
+    Write-Host "Installing Guest Additions"
+    certutil -addstore -f "TrustedPublisher" A:\oracle.cer
+    cinst 7zip.commandline -y
+    Move-Item C:\Users\vagrant\VBoxGuestAdditions.iso C:\Windows\Temp
+    7z x C:\Windows\Temp\VBoxGuestAdditions.iso -oC:\Windows\Temp\virtualbox
 
-cinst 7zip.commandline -y
-Move-Item C:\Users\vagrant\VBoxGuestAdditions.iso C:\Windows\Temp
-7z x C:\Windows\Temp\VBoxGuestAdditions.iso -oC:\Windows\Temp\virtualbox
-C:\Windows\Temp\virtualbox\VBoxWindowsAdditions.exe /S
-Remove-Item C:\Windows\Temp\virtualbox -Recurse -Force
-Remove-Item VBoxGuestAdditions.iso -Force
+    Start-Process -FilePath "C:\Windows\Temp\virtualbox\VBoxWindowsAdditions.exe" -ArgumentList "/S" -WorkingDirectory "C:\Windows\Temp\virtualbox" -Wait
+
+    Remove-Item C:\Windows\Temp\virtualbox -Recurse -Force
+    Remove-Item VBoxGuestAdditions.iso -Force
+}
 
 Write-Host "Cleaning SxS..."
 Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
@@ -65,6 +69,7 @@ finally {
  
 Del $FilePath
 
+Write-Host "copying auto unattend file"
 mkdir C:\Windows\Panther\Unattend
 copy-item a:\postunattend.xml C:\Windows\Panther\Unattend\unattend.xml
 
