@@ -12,6 +12,8 @@ function Check-Command($cmdname)
     }
 }
 
+netsh advfirewall firewall set rule group="File and Printer Sharing" new enable=yes
+
 Enable-RemoteDesktop
 netsh advfirewall firewall add rule name="Remote Desktop" dir=in localport=3389 protocol=TCP action=allow
 

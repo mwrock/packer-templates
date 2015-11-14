@@ -16,7 +16,7 @@
       "communicator": "winrm",
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
-      "winrm_timeout": "6h",
+      "winrm_timeout": "8h",
       "shutdown_command": "C:/windows/system32/sysprep/sysprep.exe /generalize /oobe /unattend:C:/Windows/Panther/Unattend/unattend.xml /quiet /shutdown",
       "shutdown_timeout": "15m",
       "floppy_files": [
@@ -43,8 +43,7 @@
       "communicator": "winrm",
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
-      "winrm_timeout": "6h",
-      "guest_additions_mode": "disable",
+      "winrm_timeout": "8h",
       "shutdown_command": "C:/windows/system32/sysprep/sysprep.exe /generalize /oobe /unattend:C:/Windows/Panther/Unattend/unattend.xml /quiet /shutdown",
       "shutdown_timeout": "15m",
       "floppy_files": [
@@ -69,7 +68,7 @@
       "artifact_type": "vagrant.box",
       "metadata": {
         "provider": "virtualbox",
-        "version": "0.1.0"
+        "version": "0.2.0"
       }
     }
   ],
