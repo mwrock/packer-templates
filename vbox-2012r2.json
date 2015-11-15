@@ -28,6 +28,7 @@
         "scripts/boxstarter.ps1",
         "scripts/PackerShutdown.bat",
         "scripts/package.ps1",
+        "scripts/SetupComplete-2012.cmd",
         "scripts/test-command.ps1"
       ]
     },
@@ -60,6 +61,7 @@
         "scripts/boxstarter.ps1",
         "scripts/PackerShutdown.bat",
         "scripts/package.ps1",
+        "scripts/SetupComplete-2012.cmd",
         "scripts/test-command.ps1"
       ]
     }
