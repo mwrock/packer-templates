@@ -14,7 +14,7 @@ if(Test-Path "C:\Users\vagrant\VBoxGuestAdditions.iso") {
     Start-Process -FilePath "C:\Windows\Temp\virtualbox\VBoxWindowsAdditions.exe" -ArgumentList "/S" -WorkingDirectory "C:\Windows\Temp\virtualbox" -Wait
 
     Remove-Item C:\Windows\Temp\virtualbox -Recurse -Force
-    Remove-Item VBoxGuestAdditions.iso -Force
+    Remove-Item C:\Windows\Temp\VBoxGuestAdditions.iso -Force
 }
 
 Write-Host "Cleaning SxS..."

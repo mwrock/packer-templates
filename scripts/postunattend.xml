@@ -41,7 +41,13 @@
                         <Description>Vagrant User</Description>
                     </LocalAccount>
                 </LocalAccounts>
-            </UserAccounts>            
+            </UserAccounts>
+          <FirstLogonCommands>
+            <SynchronousCommand wcm:action="add">
+               <CommandLine>netsh advfirewall firewall add rule name="WinRM-HTTP" dir=in localport=5985 protocol=TCP action=allow</CommandLine>
+               <Order>1</Order>
+            </SynchronousCommand>
+          </FirstLogonCommands>
         </component>
     </settings>
     <settings pass="specialize">
