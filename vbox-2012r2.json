@@ -8,6 +8,8 @@
         [ "modifyvm", "{{.Name}}", "--vram", "36" ],
         [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
       ],
+      "guest_additions_mode": "{{ user `guest_additions_mode` }}",
+      "guest_additions_path": "C:/users/vagrant/VBoxGuestAdditions.iso",
       "guest_os_type": "Windows2012_64",
       "headless": "{{ user `headless` }}",
       "iso_url": "{{ user `iso_url` }}",
@@ -17,13 +19,17 @@
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
       "winrm_timeout": "8h",
-      "shutdown_command": "C:/windows/system32/sysprep/sysprep.exe /generalize /oobe /unattend:C:/Windows/Panther/Unattend/unattend.xml /quiet /shutdown",
+      "shutdown_command": "a:/PackerShutdown.bat",
       "shutdown_timeout": "15m",
       "floppy_files": [
         "answer_files/2012_r2{{user `core`}}/Autounattend.xml",
+        "scripts/oracle.cer",
         "scripts/postunattend.xml",
         "scripts/boxstarter.ps1",
-        "scripts/package.ps1"
+        "scripts/PackerShutdown.bat",
+        "scripts/package.ps1",
+        "scripts/SetupComplete-2012.cmd",
+        "scripts/test-command.ps1"
       ]
     },
     {
@@ -44,18 +50,28 @@
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
       "winrm_timeout": "8h",
-      "shutdown_command": "C:/windows/system32/sysprep/sysprep.exe /generalize /oobe /unattend:C:/Windows/Panther/Unattend/unattend.xml /quiet /shutdown",
+      "shutdown_command": "a:/PackerShutdown.bat",
       "shutdown_timeout": "15m",
       "floppy_files": [
         "answer_files/2012_r2{{user `core`}}/Autounattend.xml",
+        "scripts/oracle.cer",
         "scripts/postunattend.xml",
         "scripts/boxstarter.ps1",
-        "scripts/package.ps1"
+        "scripts/PackerShutdown.bat",
+        "scripts/package.ps1",
+        "scripts/SetupComplete-2012.cmd",
+        "scripts/test-command.ps1"
       ]
     }
   ],
-  "post-processors": [
+  "provisioners": [
     {
+      "type": "powershell",
+      "script": "scripts/provision.ps1"
+    }
+  ],
+  "post-processors": [
+    [{
       "type": "vagrant",
       "keep_input_artifact": true,
       "output": "windows2012r2min-{{.Provider}}.box",
@@ -68,12 +84,13 @@
       "artifact_type": "vagrant.box",
       "metadata": {
         "provider": "virtualbox",
-        "version": "0.2.0"
+        "version": "0.5.1"
       }
-    }
+    }]
   ],
   "variables": {
     "core": "",
+    "guest_additions_mode": "upload",
     "headless": "false",
     "iso_checksum": "849734f37346385dac2c101e4aacba4626bb141c",
     "iso_url": "http://care.dlservice.microsoft.com/dl/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO"

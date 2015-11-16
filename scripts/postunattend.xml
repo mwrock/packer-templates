@@ -41,7 +41,7 @@
                         <Description>Vagrant User</Description>
                     </LocalAccount>
                 </LocalAccounts>
-            </UserAccounts>            
+            </UserAccounts>
         </component>
     </settings>
     <settings pass="specialize">
