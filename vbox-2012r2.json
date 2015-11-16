@@ -41,8 +41,6 @@
         [ "modifyvm", "{{.Name}}", "--vram", "36" ],
         [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
       ],
-      "guest_additions_mode": "{{ user `guest_additions_mode` }}",
-      "guest_additions_path": "C:/users/vagrant/VBoxGuestAdditions.iso",
       "guest_os_type": "Windows2012_64",
       "headless": "{{ user `headless` }}",
       "iso_url": "{{ user `iso_url` }}",
@@ -73,7 +71,7 @@
     }
   ],
   "post-processors": [
-    {
+    [{
       "type": "vagrant",
       "keep_input_artifact": true,
       "output": "windows2012r2min-{{.Provider}}.box",
@@ -88,7 +86,7 @@
         "provider": "virtualbox",
         "version": "0.5.1"
       }
-    }
+    }]
   ],
   "variables": {
     "core": "",
