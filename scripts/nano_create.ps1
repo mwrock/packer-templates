@@ -3,22 +3,22 @@ start-transcript -path $env:temp\transcript0.txt -noclobber
 mkdir c:\NanoServer
 cd c:\NanoServer
 xcopy /s d:\NanoServer\*.* .
-. .\new-nanoserverimage.ps1
+Import-Module .\NanoServerImageGenerator.psm1
 $adminPassword = ConvertTo-SecureString "Pass@word1" -AsPlainText -Force
 
 New-NanoServerImage `
   -MediaPath D:\ `
   -BasePath .\Base `
-  -TargetPath .\Nano `
+  -TargetPath .\Nano\Nano.vhdx `
   -ComputerName Nano `
   -OEMDrivers `
   -ReverseForwarders `
   -AdministratorPassword $adminPassword
 
-Mount-DiskImage -ImagePath "c:\NanoServer\nano\Nano.vhd"
+Mount-DiskImage -ImagePath "c:\NanoServer\nano\Nano.vhdx"
 
 Copy-Item `
-  -Path "F:\*" `
+  -Path "G:\*" `
   -Destination "E:\" `
   -Force `
   -Recurse `
