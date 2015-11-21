@@ -63,7 +63,7 @@
     }
   ],
   "post-processors": [
-    {
+    [{
       "type": "vagrant",
       "keep_input_artifact": true,
       "output": "windowsNano-{{.Provider}}.box",
@@ -78,7 +78,7 @@
         "provider": "virtualbox",
         "version": "0.2.0"
       }
-    }
+    }]
   ],
   "variables": {
     "headless": "false",
