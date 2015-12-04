@@ -4,6 +4,7 @@
       "type": "virtualbox-iso",
       "vboxmanage": [
         [ "modifyvm", "{{.Name}}", "--natpf1", "guest_winrm,tcp,,55985,,5985" ],
+        [ "modifyvm", "{{.Name}}", "--natpf1", "guest_winrm_ssl,tcp,,55986,,5986" ],
         [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
         [ "modifyvm", "{{.Name}}", "--vram", "36" ],
         [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
@@ -37,6 +38,7 @@
       "type": "virtualbox-iso",
       "vboxmanage": [
         [ "modifyvm", "{{.Name}}", "--natpf1", "guest_winrm,tcp,,55985,,5985" ],
+        [ "modifyvm", "{{.Name}}", "--natpf1", "guest_winrm_ssl,tcp,,55986,,5986" ],
         [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
         [ "modifyvm", "{{.Name}}", "--vram", "36" ],
         [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
@@ -60,7 +62,7 @@
         "scripts/PackerShutdown.bat",
         "scripts/package.ps1",
         "scripts/SetupComplete-2012.cmd",
-        "scripts/test-command.ps1"
+        "scripts/Test-Command.ps1"
       ]
     }
   ],
