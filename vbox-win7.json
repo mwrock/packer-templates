@@ -22,7 +22,8 @@
       "answer_files/win7/Autounattend.xml",
       "answer_files/win7/postunattend.xml",
       "scripts/boxstarter.ps1",
-      "scripts/package.ps1"
+      "scripts/package.ps1",
+      "scripts/Test-Command.ps1"
     ]
   }],
     "post-processors": [
