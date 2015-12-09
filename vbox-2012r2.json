@@ -5,7 +5,7 @@
       "vboxmanage": [
         [ "modifyvm", "{{.Name}}", "--natpf1", "guest_winrm,tcp,,55985,,5985" ],
         [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
-        [ "modifyvm", "{{.Name}}", "--vram", "36" ],
+        [ "modifyvm", "{{.Name}}", "--vram", "48" ],
         [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
       ],
       "guest_additions_mode": "{{ user `guest_additions_mode` }}",
@@ -16,6 +16,8 @@
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "communicator": "winrm",
+      "ssh_host_port_min": "5985",
+      "ssh_host_port_max": "5985",
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
       "winrm_timeout": "8h",
