@@ -44,12 +44,14 @@
                     </InstallTo>
                     <WillShowUI>OnError</WillShowUI>
                     <InstallToAvailablePartition>false</InstallToAvailablePartition>
+                    <!-- Comment out if using Entperprise -->
                     <InstallFrom>
                         <MetaData wcm:action="add">
                             <Key>/IMAGE/NAME</Key>
                             <Value>Windows 7 ULTIMATE</Value>
                         </MetaData>
                     </InstallFrom>
+                    <!-- End comment here -->
                 </OSImage>
             </ImageInstall>
         </component>
