@@ -1,0 +1,60 @@
+{
+    "builders": [{
+    "type": "virtualbox-iso",
+    "vboxmanage": [
+      [ "modifyvm", "{{.Name}}", "--natpf1", "winrm,tcp,,55985,,5985" ],
+      [ "modifyvm", "{{.Name}}", "--memory", "5120" ],
+      [ "modifyvm", "{{.Name}}", "--vram", "36" ],
+      [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
+    ],
+    "guest_os_type": "Windows7_64",
+    "iso_url": "{{ user `iso_url` }}",
+    "iso_checksum": "{{ user `iso_checksum` }}",
+    "iso_checksum_type": "sha1",
+    "communicator": "winrm",
+    "headless": "{{ user `headless` }}",
+    "winrm_username": "vagrant",
+    "winrm_password": "vagrant",
+    "winrm_timeout": "24h",
+    "shutdown_command": "C:/windows/system32/sysprep/sysprep.exe /generalize /oobe /unattend:C:/Windows/Panther/Unattend/unattend.xml /quiet /shutdown",
+    "shutdown_timeout": "15m",
+    "floppy_files": [
+      "answer_files/win7/Autounattend.xml",
+      "answer_files/win7/postunattend.xml",
+      "scripts/boxstarter.ps1",
+      "scripts/package.ps1",
+      "scripts/Test-Command.ps1",
+      "scripts/virtualbox.ps1"
+    ],
+    "guest_additions_mode": "disable",
+    "virtualbox_version_file": "C:/Users/vagrant/.vbox_version"
+  }],
+    "provisioners": [
+      {
+        "type": "windows-restart"
+      },
+      {
+        "type": "powershell",
+        "only": "virtualbox-iso",
+        "scripts": [
+          "scripts/virtualbox.ps1"
+        ],
+        "elevated_user": "vagrant",
+        "elevated_password": "vagrant",
+        "remote_path": "C:/Users/vagrant/virtualbox.ps1"
+      }
+    ],
+    "post-processors": [
+    {
+      "type": "vagrant",
+      "keep_input_artifact": true,
+      "output": "windows7-{{.Provider}}.box",
+      "vagrantfile_template": "vagrantfile-windows.template"
+    }
+  ],
+  "variables": {
+    "headless": "false",
+    "iso_checksum": "2c9774a1f48570e749e6d33c642fe8f6f7898cb0",
+    "iso_url": "iso/en_windows_7_enterprise_with_sp1_x64_dvd_620201.iso"
+  }
+}
