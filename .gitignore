@@ -1,3 +1,6 @@
-iso
-output-virtualbox-iso
+.vagrant/
+iso/
+output-virtualbox-iso/
+*.box
 *.iso
+
