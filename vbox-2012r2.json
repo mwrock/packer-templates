@@ -16,8 +16,6 @@
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "communicator": "winrm",
-      "ssh_host_port_min": "5985",
-      "ssh_host_port_max": "5985",
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
       "winrm_timeout": "8h",
