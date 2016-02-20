@@ -13,6 +13,11 @@ task prepare-hyperv {
     $vmPath = "$baseDir\hyper-v-output\Virtual Machines\vm.xml"
     [xml]$vmXml = Get-Content $vmPath
     $vmXml.configuration.properties.name.'#text' = '2012R2Min'
+
+    $ticks = [int64](get-date).ToUniversalTime().Subtract([datetime]"12/31/1600 23:59:59").Ticks
+    $creation_time = [convert]::ToBase64String([bitconverter]::GetBytes($ticks))
+    $vmXml.configuration.properties.creation_time.'#text' = $creation_time
+
     $vmXml.Save($vmPath)
 
     $vboxDisk = Resolve-Path("$baseDir\output-virtualbox-iso\*.vmdk")
