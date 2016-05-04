@@ -3,8 +3,8 @@ start-transcript -path $env:temp\transcript0.txt -noclobber
 mkdir c:\NanoServer
 cd c:\NanoServer
 xcopy /s d:\NanoServer\*.* .
-Import-Module .\NanoServerImageGenerator.psm1
-$adminPassword = ConvertTo-SecureString "Pass@word1" -AsPlainText -Force
+Import-Module .\NanoServerImageGenerator\NanoServerImageGenerator.psd1
+$adminPassword = ConvertTo-SecureString "vagrant" -AsPlainText -Force
 
 New-NanoServerImage `
   -MediaPath D:\ `
@@ -12,7 +12,8 @@ New-NanoServerImage `
   -TargetPath .\Nano\Nano.vhdx `
   -ComputerName Nano `
   -OEMDrivers `
-  -ReverseForwarders `
+  -DeploymentType Host `
+  -Edition Standard `
   -AdministratorPassword $adminPassword
 
 Mount-DiskImage -ImagePath "c:\NanoServer\nano\Nano.vhdx"
@@ -26,6 +27,8 @@ Copy-Item `
   -ErrorAction SilentlyContinue
 
 mkdir E:\Windows\setup\scripts
+mkdir E:\Windows\Panther
+
 copy-item a:\postunattend.xml E:\Windows\Panther\unattend.xml -Force
 copy-item a:\SetupComplete.cmd E:\Windows\setup\scripts\SetupComplete.cmd -Force
 copy-item a:\nano_cleanup.ps1 E:\Windows\setup\scripts\nano_cleanup.ps1 -Force

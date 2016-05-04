@@ -76,13 +76,13 @@
       "artifact_type": "vagrant.box",
       "metadata": {
         "provider": "virtualbox",
-        "version": "0.2.0"
+        "version": "0.3.0"
       }
     }]
   ],
   "variables": {
     "headless": "false",
-    "iso_checksum": "935ba77651210bd1bd71a114c92b0caa",
-    "iso_url": "http://care.dlservice.microsoft.com/dl/download/C/2/5/C257AD1A-45C1-48F9-B31C-5D37D6463123/10586.0.151029-1700.TH2_RELEASE_SERVER_OEMRET_X64FRE_EN-US.ISO"
+    "iso_checksum": "6417ba460f95bd91ded05dfacd553783",
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/8/9/2/89284B3B-BA51-49C8-90F8-59C0A58D0E70/14300.1000.160324-1723.RS1_RELEASE_SVC_SERVER_OEMRET_X64FRE_EN-US.ISO"
   }
 }

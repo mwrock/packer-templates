@@ -63,7 +63,7 @@
                     <InstallFrom>
                         <MetaData wcm:action="add">
                             <Key>/IMAGE/NAME </Key>
-                            <Value>Windows Server 2016 Technical Preview 4 SERVERDATACENTERCORE</Value>
+                            <Value>Windows Server 2016 Technical Preview 5 SERVERDATACENTERCORE</Value>
                         </MetaData>
                     </InstallFrom>
                     <InstallTo>
@@ -74,6 +74,7 @@
             </ImageInstall>
             <UserData>
                 <ProductKey>
+                    <Key>6XBNX-4JQGW-QX6QG-74P76-72V67</Key>
                     <WillShowUI>OnError</WillShowUI>
                 </ProductKey>
                 <AcceptEula>true</AcceptEula>
