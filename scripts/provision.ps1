@@ -1,5 +1,6 @@
 $ErrorActionPreference = "Stop"
-. a:\Test-Command.ps1
+
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Force
 
 Write-Host "Enabling file sharing firewale rules"
 netsh advfirewall firewall set rule group="File and Printer Sharing" new enable=yes
@@ -17,33 +18,8 @@ if(Test-Path "C:\Users\vagrant\VBoxGuestAdditions.iso") {
     Remove-Item C:\Windows\Temp\VBoxGuestAdditions.iso -Force
 }
 
-Write-Host "Cleaning SxS..."
-Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
-
-@(
-    "$env:localappdata\Nuget",
-    "$env:localappdata\temp\*",
-    "$env:windir\logs",
-    "$env:windir\panther",
-    "$env:windir\temp\*",
-    "$env:windir\winsxs\manifestcache"
-) | % {
-        if(Test-Path $_) {
-            Write-Host "Removing $_"
-            try {
-              Takeown /d Y /R /f $_
-              Icacls $_ /GRANT:r administrators:F /T /c /q  2>&1 | Out-Null
-              Remove-Item $_ -Recurse -Force | Out-Null 
-            } catch { $global:error.RemoveAt(0) }
-        }
-    }
-
 Write-Host "defragging..."
-if (Test-Command -cmdname 'Optimize-Volume') {
-    Optimize-Volume -DriveLetter C
-    } else {
-    Defrag.exe c: /H
-}
+Optimize-Volume -DriveLetter C
 
 Write-Host "0ing out empty space..."
 $FilePath="c:\zero.tmp"
@@ -70,15 +46,5 @@ finally {
 Del $FilePath
 
 Write-Host "copying auto unattend file"
-mkdir C:\Windows\setup\scripts
-copy-item a:\SetupComplete-2012.cmd C:\Windows\setup\scripts\SetupComplete.cmd -Force
-
 mkdir C:\Windows\Panther\Unattend
 copy-item a:\postunattend.xml C:\Windows\Panther\Unattend\unattend.xml
-
-Write-Host "Recreate pagefile after sysprep"
-$System = GWMI Win32_ComputerSystem -EnableAllPrivileges
-if ($system -ne $null) {
-  $System.AutomaticManagedPagefile = $true
-  $System.Put()
-}
