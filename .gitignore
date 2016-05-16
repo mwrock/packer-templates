@@ -1,3 +1,5 @@
 iso
 output-virtualbox-iso
+output-qemu
 *.iso
+*.box
