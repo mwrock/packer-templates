@@ -1,0 +1,56 @@
+{
+  "builders": [
+    {
+      "type": "qemu",
+      "format": "qcow2",
+      "accelerator": "kvm",
+      "qemuargs": [
+      	[ "-m", "2048" ]
+      ],
+      "headless": "{{ user `headless` }}",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
+      "communicator": "winrm",
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "8h",
+      "shutdown_command": "a:/PackerShutdown.bat",
+      "shutdown_timeout": "15m",
+      "floppy_files": [
+	"answer_files/2012_r2{{user `core`}}/Autounattend.xml",
+	"scripts/oracle.cer",
+	"scripts/postunattend.xml",
+	"scripts/boxstarter.ps1",
+	"scripts/PackerShutdown.bat",
+	"scripts/package.ps1",
+	"scripts/SetupComplete-2012.cmd",
+	"scripts/Test-Command.ps1",
+	"{{ user `virtio_dir`}}/netkvm.*",
+	"{{ user `virtio_dir`}}/viostor.*"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "powershell",
+      "script": "scripts/provision.ps1"
+    }
+  ],
+  "post-processors": [
+    [{
+      "type": "vagrant",
+      "keep_input_artifact": true,
+      "output": "windows2012r2min-{{.Provider}}.box",
+      "vagrantfile_template": "vagrantfile-windows.template"
+    }
+    ]
+  ],
+  "variables": {
+    "core": "",
+    "headless": "false",
+    "iso_checksum": "849734f37346385dac2c101e4aacba4626bb141c",
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO",
+    "virtio_dir": "/usr/share/virtio-win/drivers/amd64/Win2012R2"
+  }
+}
