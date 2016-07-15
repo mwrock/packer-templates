@@ -18,7 +18,7 @@
       "communicator": "winrm",
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
-      "winrm_timeout": "8h",
+      "winrm_timeout": "12h",
       "shutdown_command": "a:/PackerShutdown.bat",
       "shutdown_timeout": "15m",
       "floppy_files": [
@@ -49,7 +49,7 @@
       "communicator": "winrm",
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
-      "winrm_timeout": "8h",
+      "winrm_timeout": "12h",
       "shutdown_command": "a:/PackerShutdown.bat",
       "shutdown_timeout": "15m",
       "floppy_files": [
@@ -84,7 +84,7 @@
       "artifact_type": "vagrant.box",
       "metadata": {
         "provider": "virtualbox",
-        "version": "0.5.1"
+        "version": "0.5.2"
       }
     }]
   ],
