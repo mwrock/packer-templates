@@ -9,7 +9,7 @@ if(Test-Path "C:\Users\vagrant\VBoxGuestAdditions.iso") {
     certutil -addstore -f "TrustedPublisher" A:\oracle.cer
     cinst 7zip.commandline -y
     Move-Item C:\Users\vagrant\VBoxGuestAdditions.iso C:\Windows\Temp
-    7z x C:\Windows\Temp\VBoxGuestAdditions.iso -oC:\Windows\Temp\virtualbox
+    ."C:\ProgramData\chocolatey\lib\7zip.commandline\tools\7z.exe" x C:\Windows\Temp\VBoxGuestAdditions.iso -oC:\Windows\Temp\virtualbox
 
     Start-Process -FilePath "C:\Windows\Temp\virtualbox\VBoxWindowsAdditions.exe" -ArgumentList "/S" -WorkingDirectory "C:\Windows\Temp\virtualbox" -Wait
 
