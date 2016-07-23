@@ -1,6 +1,6 @@
 {
   "builders": [
-     {
+    {
       "type": "virtualbox-iso",
       "vboxmanage": [
         [ "modifyvm", "{{.Name}}", "--natpf1", "guest_winrm,tcp,,55985,,5985" ],
@@ -10,41 +10,9 @@
       ],
       "guest_additions_mode": "{{ user `guest_additions_mode` }}",
       "guest_additions_path": "C:/users/vagrant/VBoxGuestAdditions.iso",
-      "guest_os_type": "windows7srv-64",
+      "guest_os_type": "windows7srv-64",    
       "headless": true,
-      "boot_wait": "2m",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "ssh_wait_timeout": "2h",
-      "shutdown_command": "c:/windows/system32/sysprep/sysprep.exe /oobe /generalize /shutdown /quiet /unattend:a:/postunattend.xml",
-      
-      "tools_upload_flavor": "windows",
-      "disk_size": 61440,
-      "vnc_port_min": 5900,
-      "vnc_port_max": 5980,
-      "floppy_files": [
-        "{{user `autounattend`}}",
-        "./scripts/microsoft-updates.bat",
-        "./scripts/win-updates.ps1",
-        "./scripts/openssh.ps1",
-        "./scripts/postunattend.xml"
-      ],
-      "vmx_data": {
-        "RemoteDisplay.vnc.enabled": "false",
-        "RemoteDisplay.vnc.port": "5900",
-        "memsize": "2048",
-        "numvcpus": "2",
-        "scsi0.virtualDev": "lsisas1068"
-      }
-    },
-    {
-      "type": "virtualbox-iso",
       "iso_url": "{{user `iso_url`}}",
-      "iso_checksum_type": "{{user `iso_checksum_type`}}",
-      "iso_checksum": "{{user `iso_checksum`}}",
-      "headless": true,
-      "boot_wait": "2m",
-"iso_url": "{{user `iso_url`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "communicator": "winrm",
@@ -60,6 +28,7 @@
         "scripts/boxstarter.ps1",
         "scripts/PackerShutdown.bat",
         "scripts/package.ps1",
+        "scripts/winupdates.ps1",        
         "scripts/SetupComplete-2012.cmd",
         "scripts/Test-Command.ps1"
       ]
@@ -80,6 +49,9 @@
     }]
   ],
   "variables": {
+    "core": "",
+    "guest_additions_mode": "upload",
+    "headless": "false", 
     "iso_url": "http://download.microsoft.com/download/7/5/E/75EC4E54-5B02-42D6-8879-D8D3A25FBEF7/7601.17514.101119-1850_x64fre_server_eval_en-us-GRMSXEVAL_EN_DVD.iso",
     "iso_checksum_type": "md5",
     "iso_checksum": "4263be2cf3c59177c45085c0a7bc6ca5"

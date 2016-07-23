@@ -28,6 +28,7 @@
         "scripts/boxstarter.ps1",
         "scripts/PackerShutdown.bat",
         "scripts/package.ps1",
+        "scripts/winupdates.ps1",        
         "scripts/SetupComplete-2012.cmd",
         "scripts/Test-Command.ps1"
       ]
