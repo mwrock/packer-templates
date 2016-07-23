@@ -32,7 +32,7 @@
         "scripts/SetupComplete-2012.cmd",
         "scripts/Test-Command.ps1"
       ]
-    },
+    }
   ],
   "provisioners": [
     {
