@@ -1,0 +1,58 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--natpf1", "guest_winrm,tcp,,55985,,5985" ],
+        [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
+        [ "modifyvm", "{{.Name}}", "--vram", "48" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
+      ],
+      "guest_additions_mode": "{{ user `guest_additions_mode` }}",
+      "guest_additions_path": "C:/users/vagrant/VBoxGuestAdditions.iso",
+      "guest_os_type": "windows8srv-64",      
+      "headless": true,
+      "iso_url": "{{user `iso_url`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "communicator": "winrm",
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "12h",
+      "shutdown_command": "a:/PackerShutdown.bat",
+      "shutdown_timeout": "15m",
+      "floppy_files": [
+        "answer_files/2012_r2{{user `core`}}/Autounattend.xml",
+        "scripts/oracle.cer",
+        "scripts/postunattend.xml",
+        "scripts/boxstarter.ps1",
+        "scripts/PackerShutdown.bat",
+        "scripts/package.ps1",
+        "scripts/SetupComplete-2012.cmd",
+        "scripts/Test-Command.ps1"
+      ]
+    },
+  ],
+  "provisioners": [
+    {
+      "type": "powershell",
+      "script": "scripts/provision.ps1"
+    }
+  ],
+  "post-processors": [
+    [{
+      "type": "vagrant",
+      "keep_input_artifact": true,
+      "output": "windows_10_{{.Provider}}.box",
+      "vagrantfile_template": "vagrantfile-windows.template"
+    }]
+  ],
+  "variables": {
+    "core": "",
+    "guest_additions_mode": "upload",
+    "headless": "false",
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/C/3/9/C399EEA8-135D-4207-92C9-6AAB3259F6EF/10240.16384.150709-1700.TH1_CLIENTENTERPRISEEVAL_OEMRET_X64FRE_EN-US.ISO",
+    "iso_checksum_type": "sha1",
+    "iso_checksum": "56ab095075be28a90bc0b510835280975c6bb2ce"
+  }
+}

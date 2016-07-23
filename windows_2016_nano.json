@@ -1,0 +1,88 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--natpf1", "guest_winrm,tcp,,55985,,5985" ],
+        [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
+        [ "modifyvm", "{{.Name}}", "--vram", "36" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "2" ],
+        [ "modifyvm", "{{.Name}}", "--hardwareuuid", "02f110e7-369a-4bbc-bbe6-6f0b6864ccb6" ]
+      ],
+      "guest_os_type": "Windows2012_64",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "md5",
+      "communicator": "winrm",
+      "disk_size": 61440,
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "6h",
+      "guest_additions_mode": "disable",
+      "headless": "{{ user `headless` }}",    
+      "shutdown_command": "shutdown /r /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "shutdown_timeout": "1h",
+      "floppy_files": [
+        "answer_files/nano/Autounattend.xml",
+        "scripts/nano_create.ps1",
+        "scripts/nano_cleanup.ps1",
+        "scripts/SetupComplete.cmd",
+        "scripts/postunattend.xml"
+      ]
+    },
+    {
+      "name": "virtualbox-iso-atlas",
+      "type": "virtualbox-iso",
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--natpf1", "guest_winrm,tcp,,55985,,5985" ],
+        [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
+        [ "modifyvm", "{{.Name}}", "--vram", "36" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "2" ],
+        [ "modifyvm", "{{.Name}}", "--hardwareuuid", "02f110e7-369a-4bbc-bbe6-6f0b6864ccb6" ]
+      ],
+      "guest_os_type": "Windows2012_64",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "md5",
+      "communicator": "winrm",
+      "disk_size": 61440,
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "6h",
+      "guest_additions_mode": "disable",
+      "headless": "{{ user `headless` }}",    
+      "shutdown_command": "shutdown /r /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "shutdown_timeout": "1h",
+      "floppy_files": [
+        "answer_files/nano/Autounattend.xml",
+        "scripts/nano_create.ps1",
+        "scripts/nano_cleanup.ps1",
+        "scripts/SetupComplete.cmd",
+        "scripts/postunattend.xml"
+      ]
+    }
+  ],
+  "post-processors": [
+    [{
+      "type": "vagrant",
+      "keep_input_artifact": true,
+      "output": "windowsNano-{{.Provider}}.box",
+      "vagrantfile_template": "vagrantfile-windows-nano.template"
+    },
+    {
+      "type": "atlas",
+      "only": ["virtualbox-iso-atlas"],
+      "artifact": "mwrock/WindowsNano",
+      "artifact_type": "vagrant.box",
+      "metadata": {
+        "provider": "virtualbox",
+        "version": "0.3.0"
+      }
+    }]
+  ],
+  "variables": {
+    "headless": "false",
+    "iso_checksum": "6417ba460f95bd91ded05dfacd553783",
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/8/9/2/89284B3B-BA51-49C8-90F8-59C0A58D0E70/14300.1000.160324-1723.RS1_RELEASE_SVC_SERVER_OEMRET_X64FRE_EN-US.ISO"
+  }
+}
