@@ -56,8 +56,9 @@
         "answer_files/2012_r2{{user `core`}}/Autounattend.xml",
         "scripts/oracle.cer",
         "scripts/postunattend.xml",
-        "scripts/winrm.ps1",
+        "scripts/boxstarter.ps1",
         "scripts/PackerShutdown.bat",
+        "scripts/package.ps1",
         "scripts/SetupComplete-2012.cmd",
         "scripts/Test-Command.ps1"
       ]
@@ -65,11 +66,9 @@
   ],
   "provisioners": [
     {
-      "type": "chef-solo",
-      "cookbook_paths": ["cookbooks"],
-      "guest_os_type ": "windows",
-      "runlist": "2012r2::default",
-    },
+      "type": "powershell",
+      "script": "scripts/provision.ps1"
+    }
   ],
   "post-processors": [
     [{

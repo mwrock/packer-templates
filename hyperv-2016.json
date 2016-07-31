@@ -1,0 +1,60 @@
+{
+  "builders": [
+    {
+      "type": "hyperv-iso",
+      "guest_additions_mode": "disable",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "md5",
+      "ram_size_mb": 2048,
+      "communicator": "winrm",
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "12h",
+      "shutdown_command": "a:/PackerShutdown.bat",
+      "shutdown_timeout": "15m",
+      "floppy_files": [
+        "answer_files/2016/Autounattend.xml",
+        "scripts/postunattend.xml",
+        "scripts/winrm.ps1",
+        "scripts/PackerShutdown.bat",
+        "scripts/Test-Command.ps1"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "powershell",
+      "script": "scripts/windows-updates.ps1",
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant"
+    },
+    {
+      "type": "windows-restart"
+    },
+    {
+      "type": "powershell",
+      "script": "scripts/after-updates.ps1",
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant"
+    },
+    {
+      "type": "powershell",
+      "script": "scripts/provision.ps1",
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant"
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "keep_input_artifact": true,
+      "output": "windows2016min-{{.Provider}}.box",
+      "vagrantfile_template": "vagrantfile-windows.template"
+    }
+  ],
+  "variables": {
+    "iso_checksum": "6417ba460f95bd91ded05dfacd553783",
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/8/9/2/89284B3B-BA51-49C8-90F8-59C0A58D0E70/14300.1000.160324-1723.RS1_RELEASE_SVC_SERVER_OEMRET_X64FRE_EN-US.ISO"
+  }
+}

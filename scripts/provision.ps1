@@ -1,3 +1,4 @@
+$ProgressPreference='SilentlyContinue'
 $ErrorActionPreference = "Stop"
 . a:\Test-Command.ps1
 
@@ -21,6 +22,7 @@ Write-Host "Cleaning SxS..."
 Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
 
 @(
+    "C:\Recovery",
     "$env:localappdata\Nuget",
     "$env:localappdata\temp\*",
     "$env:windir\logs",
@@ -70,9 +72,6 @@ finally {
 Del $FilePath
 
 Write-Host "copying auto unattend file"
-mkdir C:\Windows\setup\scripts
-copy-item a:\SetupComplete-2012.cmd C:\Windows\setup\scripts\SetupComplete.cmd -Force
-
 mkdir C:\Windows\Panther\Unattend
 copy-item a:\postunattend.xml C:\Windows\Panther\Unattend\unattend.xml
 
