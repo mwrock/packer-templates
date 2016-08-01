@@ -1,19 +1,33 @@
 ---
 driver:
-  name: vagrant
+  name: hyperv
+  parent_vhd_folder: '../../output-hyperv-iso/virtual hard disks'
+  parent_vhd_name: packer-hyperv-iso.vhdx
 
 provisioner:
   name: chef_zero
 
-verifier:
-  name: inspec
+transport:
+  name: winrm
+  elevated: true
+  password: vagrant
+  username: vagrant
 
 platforms:
-  - name: ubuntu-16.04
-  - name: centos-7.2
+  - name: windows-2016
 
 suites:
   - name: default
     run_list:
-      - recipe[2012r2::default]
+      - recipe[2012r2::get_cookbooks]
+      - recipe[2012r2::uninstall_powershell_ise]
+      - recipe[2012r2::install_ps_modules]
+      - recipe[2012r2::delete_pagefile]
+      - recipe[2012r2::enable_file_sharing]
+      - recipe[2012r2::remote_desktop]
+      - recipe[2012r2::clean_sxs]
+      - recipe[2012r2::add_postunattend]
+      - recipe[2012r2::add_pagefile]
+      - recipe[2012r2::set_local_account_token_filter_policy]
+      - recipe[2012r2::remove_dirs]
     attributes:

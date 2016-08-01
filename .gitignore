@@ -4,3 +4,5 @@ output-hyperv-iso
 output-qemu
 *.iso
 *.box
+.kitchen
+vendor

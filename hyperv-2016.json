@@ -15,14 +15,23 @@
       "shutdown_timeout": "15m",
       "floppy_files": [
         "answer_files/2016/Autounattend.xml",
-        "scripts/postunattend.xml",
         "scripts/winrm.ps1",
-        "scripts/PackerShutdown.bat",
-        "scripts/Test-Command.ps1"
+        "scripts/PackerShutdown.bat"
       ]
     }
   ],
   "provisioners": [
+    {
+      "type": "chef-solo",
+      "cookbook_paths": ["cookbooks", "vendor/cookbooks"],
+      "guest_os_type": "windows",
+      "run_list": [
+        "wsus-client::configure",
+        "2012r2::uninstall_powershell_ise",
+        "2012r2::install_ps_modules",
+        "2012r2::delete_pagefile"
+      ]
+    },
     {
       "type": "powershell",
       "script": "scripts/windows-updates.ps1",
@@ -34,13 +43,28 @@
     },
     {
       "type": "powershell",
-      "script": "scripts/after-updates.ps1",
+      "script": "scripts/after-reboot.ps1",
       "elevated_user": "vagrant",
       "elevated_password": "vagrant"
     },
     {
+      "type": "chef-solo",
+      "cookbook_paths": ["cookbooks", "vendor/cookbooks"],
+      "guest_os_type": "windows",
+      "skip_install": "true",
+      "run_list": [
+        "2012r2::enable_file_sharing",
+        "2012r2::remote_desktop",
+        "2012r2::clean_sxs",
+        "2012r2::add_postunattend",
+        "2012r2::add_pagefile",
+        "2012r2::set_local_account_token_filter_policy",
+        "2012r2::remove_dirs"
+      ]
+    },
+    {
       "type": "powershell",
-      "script": "scripts/provision.ps1",
+      "script": "scripts/cleanup.ps1",
       "elevated_user": "vagrant",
       "elevated_password": "vagrant"
     }
