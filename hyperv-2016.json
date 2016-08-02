@@ -49,7 +49,10 @@
     },
     {
       "type": "chef-solo",
-      "cookbook_paths": ["cookbooks", "vendor/cookbooks"],
+      "remote_cookbook_paths": [
+        "c:/windows/temp/packer-chef-client/cookbooks-0",
+        "c:/windows/temp/packer-chef-client/cookbooks-1"
+      ],
       "guest_os_type": "windows",
       "skip_install": "true",
       "run_list": [
