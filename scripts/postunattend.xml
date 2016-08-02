@@ -45,8 +45,5 @@
         </component>
     </settings>
     <settings pass="specialize">
-        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
-            <ProductKey>6XBNX-4JQGW-QX6QG-74P76-72V67</ProductKey>
-        </component>
     </settings>
 </unattend>
