@@ -13,6 +13,7 @@
       "winrm_timeout": "12h",
       "shutdown_command": "C:/Windows/Panther/Unattend/packer_shutdown.bat",
       "shutdown_timeout": "15m",
+      "switch_name": "internal_switch",
       "floppy_files": [
         "answer_files/2016/Autounattend.xml",
         "scripts/winrm.ps1"
