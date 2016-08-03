@@ -13,7 +13,7 @@
       "headless": "{{ user `headless` }}",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
+      "iso_checksum_type": "md5",
       "communicator": "winrm",
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
@@ -33,6 +33,7 @@
       "guest_os_type": "windows",
       "run_list": [
         "wsus-client::configure",
+        "2012r2::vbox_guest_additions",
         "2012r2::uninstall_powershell_ise",
         "2012r2::install_ps_modules",
         "2012r2::delete_pagefile"
