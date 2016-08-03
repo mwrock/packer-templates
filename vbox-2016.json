@@ -1,0 +1,95 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--natpf1", "guest_winrm,tcp,,55985,,5985" ],
+        [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
+        [ "modifyvm", "{{.Name}}", "--vram", "48" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
+      ],
+      "guest_additions_mode": "{{ user `guest_additions_mode` }}",
+      "guest_os_type": "Windows2012_64",
+      "headless": "{{ user `headless` }}",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
+      "communicator": "winrm",
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "12h",
+      "shutdown_command": "C:/Windows/Panther/Unattend/packer_shutdown.bat",
+      "shutdown_timeout": "15m",
+      "floppy_files": [
+        "answer_files/2016/Autounattend.xml",
+        "scripts/winrm.ps1"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "chef-solo",
+      "cookbook_paths": ["cookbooks", "vendor/cookbooks"],
+      "guest_os_type": "windows",
+      "run_list": [
+        "wsus-client::configure",
+        "2012r2::uninstall_powershell_ise",
+        "2012r2::install_ps_modules",
+        "2012r2::delete_pagefile"
+      ]
+    },
+    {
+      "type": "powershell",
+      "script": "scripts/windows-updates.ps1",
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant"
+    },
+    {
+      "type": "windows-restart"
+    },
+    {
+      "type": "powershell",
+      "script": "scripts/after-reboot.ps1",
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant"
+    },
+    {
+      "type": "chef-solo",
+      "remote_cookbook_paths": [
+        "c:/windows/temp/packer-chef-client/cookbooks-0",
+        "c:/windows/temp/packer-chef-client/cookbooks-1"
+      ],
+      "guest_os_type": "windows",
+      "skip_install": "true",
+      "run_list": [
+        "2012r2::enable_file_sharing",
+        "2012r2::remote_desktop",
+        "2012r2::clean_sxs",
+        "2012r2::add_postunattend",
+        "2012r2::add_pagefile",
+        "2012r2::set_local_account_token_filter_policy",
+        "2012r2::remove_dirs"
+      ]
+    },
+    {
+      "type": "powershell",
+      "script": "scripts/cleanup.ps1",
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant"
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "keep_input_artifact": true,
+      "output": "windows2016min-{{.Provider}}.box",
+      "vagrantfile_template": "vagrantfile-windows.template"
+    }
+  ],
+  "variables": {
+    "guest_additions_mode": "attach",
+    "headless": "false",
+    "iso_checksum": "6417ba460f95bd91ded05dfacd553783",
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/8/9/2/89284B3B-BA51-49C8-90F8-59C0A58D0E70/14300.1000.160324-1723.RS1_RELEASE_SVC_SERVER_OEMRET_X64FRE_EN-US.ISO"
+  }
+}
