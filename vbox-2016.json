@@ -70,7 +70,7 @@
         "2012r2::add_pagefile",
         "2012r2::set_local_account_token_filter_policy",
         "2012r2::remove_dirs",
-        "2012r2::add_setup_complete",
+        "2012r2::add_setup_complete"
       ]
     },
     {
