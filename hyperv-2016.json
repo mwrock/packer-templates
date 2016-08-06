@@ -27,9 +27,9 @@
       "guest_os_type": "windows",
       "run_list": [
         "wsus-client::configure",
-        "2012r2::uninstall_powershell_ise",
-        "2012r2::install_ps_modules",
-        "2012r2::delete_pagefile"
+        "packer-templates::uninstall_powershell_ise",
+        "packer-templates::install_ps_modules",
+        "packer-templates::delete_pagefile"
       ]
     },
     {
@@ -56,13 +56,13 @@
       "guest_os_type": "windows",
       "skip_install": "true",
       "run_list": [
-        "2012r2::enable_file_sharing",
-        "2012r2::remote_desktop",
-        "2012r2::clean_sxs",
-        "2012r2::add_postunattend",
-        "2012r2::add_pagefile",
-        "2012r2::set_local_account_token_filter_policy",
-        "2012r2::remove_dirs"
+        "packer-templates::enable_file_sharing",
+        "packer-templates::remote_desktop",
+        "packer-templates::clean_sxs",
+        "packer-templates::add_postunattend",
+        "packer-templates::add_pagefile",
+        "packer-templates::set_local_account_token_filter_policy",
+        "packer-templates::remove_dirs"
       ]
     },
     {
