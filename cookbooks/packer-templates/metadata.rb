@@ -1,4 +1,4 @@
-name '2012r2'
+name 'packer-templates'
 maintainer 'Matt Wrock'
 maintainer_email 'matt@mattwrock.com'
 license 'all_rights'
