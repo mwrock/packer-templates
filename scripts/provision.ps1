@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 . a:\Test-Command.ps1
 
-Write-Host "Enabling file sharing firewale rules"
+Write-Host "Enabling file sharing firewall rules"
 netsh advfirewall firewall set rule group="File and Printer Sharing" new enable=yes
 
 if(Test-Path "C:\Users\vagrant\VBoxGuestAdditions.iso") {
