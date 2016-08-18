@@ -25,7 +25,7 @@ Invoke `packer` to run a template like this:
 packer build -force -only virtualbox-iso .\vbox-2016.json
 ```
 ## Using the Hyper-V templates
-The Hyper-V templates use the Hyper-V builder curriently in [Taliesin Sisson's](https://github.com/taliesins) PR [#2576](https://github.com/mitchellh/packer/pull/2576) to the [packer repo](https://github.com/mitchellh/packer). See [this post](http://www.hurryupandwait.io/blog/creating-hyper-v-images-with-packer) with full instructions on building and using this PR.
+The Hyper-V templates use the Hyper-V builder currently in [Taliesin Sisson's](https://github.com/taliesins) PR [#2576](https://github.com/mitchellh/packer/pull/2576) to the [packer repo](https://github.com/mitchellh/packer). See [this post](http://www.hurryupandwait.io/blog/creating-hyper-v-images-with-packer) with full instructions on building and using this PR.
 
 ## Converting to Hyper-V
 This repo includes PowerShell scripts that can create a Hyper-V Vagrant box from the output VirtualBox .vmdk file. This repo leverages [psake](https://github.com/psake/psake) and [Chocolatey](https://chocolatey.org) to ensure that all prerequisites are installed and then runs the above `packer` command followed by the scripts needed to produce a Vagrant .box file that can create a Hyper-V file.
