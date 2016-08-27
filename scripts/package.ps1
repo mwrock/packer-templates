@@ -8,14 +8,23 @@ netsh advfirewall firewall add rule name="Remote Desktop" dir=in localport=3389 
 Update-ExecutionPolicy -Policy Unrestricted
 
 if (Test-Command -cmdname 'Uninstall-WindowsFeature') {
-    Write-BoxstarterMessage "Removing unused features..."
+    Write-Host "Removing unused features..."
     Remove-WindowsFeature -Name 'Powershell-ISE'
     Get-WindowsFeature | 
     ? { $_.InstallState -eq 'Available' } | 
     Uninstall-WindowsFeature -Remove
 }
 
-Write-BoxstarterMessage "Setting up winrm"
+
+#Install-WindowsUpdate -AcceptEula
+
+#Write-BoxstarterMessage "Removing page file"
+#$pageFileMemoryKey = "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management"
+#Set-ItemProperty -Path $pageFileMemoryKey -Name PagingFiles -Value ""
+
+#if(Test-PendingReboot){ Invoke-Reboot }
+
+Write-Host "Setting up winrm"
 netsh advfirewall firewall add rule name="WinRM-HTTP" dir=in localport=5985 protocol=TCP action=allow
 
 $enableArgs=@{Force=$true}
@@ -32,5 +41,6 @@ Enable-PSRemoting @enableArgs
 Enable-WSManCredSSP -Force -Role Server
 winrm set winrm/config/client/auth '@{Basic="true"}'
 winrm set winrm/config/service/auth '@{Basic="true"}'
+winrm set winrm/config/winrs '@{MaxMemoryPerShellMB="2048"}'
 winrm set winrm/config/service '@{AllowUnencrypted="true"}'
 Write-BoxstarterMessage "winrm setup complete"
