@@ -47,7 +47,7 @@
                     <InstallFrom>
                         <MetaData wcm:action="add">
                             <Key>/IMAGE/NAME</Key>
-                            <Value>Windows 7 ULTIMATE</Value>
+                            <Value>Windows 7 ENTERPRISE</Value>
                         </MetaData>
                     </InstallFrom>
                 </OSImage>
