@@ -11,7 +11,7 @@
       "guest_additions_mode": "{{ user `guest_additions_mode` }}",
       "guest_additions_path": "C:/users/vagrant/VBoxGuestAdditions.iso",
       "guest_os_type": "Windows10_64",      
-      "headless": true,
+      "headless": "{{ user `headless` }}",
       "iso_url": "{{user `iso_url`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
@@ -25,12 +25,12 @@
         "answer_files/10/Autounattend.xml",
         "scripts/oracle.cer",
         "scripts/postunattend.xml",
-        "scripts/boxstarter.ps1",
         "scripts/PackerShutdown.bat",
         "scripts/package.ps1",
         "scripts/winupdates.ps1",
-        "scripts/SetupComplete-2012.cmd",
-        "scripts/Test-Command.ps1"
+        "scripts/dis-updates.ps1",
+        "scripts/SetupComplete.cmd",
+        "scripts/Test-Command.ps1"        
       ]
     }
   ],
@@ -50,8 +50,8 @@
   ],
   "variables": {
     "core": "",
-    "guest_additions_mode": "upload",
-    "headless": "false",
+    "guest_additions_mode": "attach",
+    "headless": "true",
     "iso_url": "http://care.dlservice.microsoft.com/dl/download/C/3/9/C399EEA8-135D-4207-92C9-6AAB3259F6EF/10240.16384.150709-1700.TH1_CLIENTENTERPRISEEVAL_OEMRET_X64FRE_EN-US.ISO",
     "iso_checksum_type": "sha1",
     "iso_checksum": "56ab095075be28a90bc0b510835280975c6bb2ce"

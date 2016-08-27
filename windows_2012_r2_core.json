@@ -11,7 +11,7 @@
       "guest_additions_mode": "{{ user `guest_additions_mode` }}",
       "guest_additions_path": "C:/users/vagrant/VBoxGuestAdditions.iso",
       "guest_os_type": "Windows2012_64",      
-      "headless": true,
+      "headless": "{{ user `headless` }}",
       "iso_url": "{{user `iso_url`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
@@ -28,7 +28,7 @@
         "scripts/boxstarter.ps1",
         "scripts/PackerShutdown.bat",
         "scripts/package.ps1",
-        "scripts/winupdates.ps1",        
+        "scripts/winupdates.ps1",
         "scripts/SetupComplete-2012.cmd",
         "scripts/Test-Command.ps1"
       ]
@@ -49,11 +49,10 @@
     }]
   ],
   "variables": {
-    "core": "",
-    "guest_additions_mode": "upload",
-    "headless": "false",
-    "iso_url": "http://download.microsoft.com/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_SERVER_EVAL_EN-US-IRM_SSS_X64FREE_EN-US_DV5.ISO",
+    "guest_additions_mode": "attach",
+    "headless": "true",
     "iso_checksum_type": "md5",
-    "iso_checksum": "458ff91f8abc21b75cb544744bf92e6a"
+    "iso_checksum": "458ff91f8abc21b75cb544744bf92e6a",
+    "iso_url": "http://download.microsoft.com/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_SERVER_EVAL_EN-US-IRM_SSS_X64FREE_EN-US_DV5.ISO"
   }
 }

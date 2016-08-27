@@ -11,7 +11,7 @@
       "guest_additions_mode": "{{ user `guest_additions_mode` }}",
       "guest_additions_path": "C:/users/vagrant/VBoxGuestAdditions.iso",
       "guest_os_type": "Windows2008_64",    
-      "headless": true,
+      "headless": "{{ user `headless` }}",
       "iso_url": "{{user `iso_url`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
@@ -24,12 +24,13 @@
       "floppy_files": [
         "answer_files/2008_r2_core/Autounattend.xml",
         "scripts/oracle.cer",
+        "scripts/microsoft-updates.bat",
+        "scripts/winupdates.ps1",        
         "scripts/postunattend.xml",
-        "scripts/boxstarter.ps1",
         "scripts/PackerShutdown.bat",
         "scripts/package.ps1",
-        "scripts/winupdates.ps1",        
-        "scripts/SetupComplete-2012.cmd",
+        "scripts/dis-updates.ps1",              
+        "scripts/SetupComplete.cmd",
         "scripts/Test-Command.ps1"
       ]
     }
@@ -49,8 +50,7 @@
     }]
   ],
   "variables": {
-    "core": "",
-    "guest_additions_mode": "upload",
+    "guest_additions_mode": "attach",
     "headless": "false",    
     "iso_url": "http://download.microsoft.com/download/7/5/E/75EC4E54-5B02-42D6-8879-D8D3A25FBEF7/7601.17514.101119-1850_x64fre_server_eval_en-us-GRMSXEVAL_EN_DVD.iso",
     "iso_checksum_type": "md5",

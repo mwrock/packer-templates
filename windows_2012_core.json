@@ -11,7 +11,7 @@
       "guest_additions_mode": "{{ user `guest_additions_mode` }}",
       "guest_additions_path": "C:/users/vagrant/VBoxGuestAdditions.iso",
       "guest_os_type": "Windows2012_64",      
-      "headless": true,
+      "headless": "{{ user `headless` }}",
       "iso_url": "{{user `iso_url`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
@@ -27,8 +27,7 @@
         "scripts/postunattend.xml",
         "scripts/boxstarter.ps1",
         "scripts/PackerShutdown.bat",
-        "scripts/package.ps1",
-        "scripts/winupdates.ps1",        
+        "scripts/package.ps1",       
         "scripts/SetupComplete-2012.cmd",
         "scripts/Test-Command.ps1"
       ]
@@ -49,8 +48,7 @@
     }]
   ],
   "variables": {
-    "core": "",
-    "guest_additions_mode": "upload",
+    "guest_additions_mode": "attach",
     "headless": "false",
     "iso_url": "http://download.microsoft.com/download/6/D/A/6DAB58BA-F939-451D-9101-7DE07DC09C03/9200.16384.WIN8_RTM.120725-1247_X64FRE_SERVER_EVAL_EN-US-HRM_SSS_X64FREE_EN-US_DV5.ISO",
     "iso_checksum_type": "md5",

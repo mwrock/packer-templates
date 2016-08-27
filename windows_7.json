@@ -11,7 +11,7 @@
       "guest_additions_mode": "{{ user `guest_additions_mode` }}",
       "guest_additions_path": "C:/users/vagrant/VBoxGuestAdditions.iso",
       "guest_os_type": "Windows7_64",      
-      "headless": true,
+      "headless": "{{ user `headless` }}",
       "iso_url": "{{user `iso_url`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
@@ -25,14 +25,14 @@
         "answer_files/7/Autounattend.xml",
         "scripts/oracle.cer",
         "scripts/postunattend.xml",
-        "scripts/boxstarter.ps1",
         "scripts/PackerShutdown.bat",
         "scripts/package.ps1",
         "scripts/winupdates.ps1",
-        "scripts/SetupComplete-2012.cmd",
+        "scripts/dis-updates.ps1",
+        "scripts/SetupComplete.cmd",
         "scripts/Test-Command.ps1"
       ]
-    },
+    }
   ],
   "provisioners": [
     {
@@ -49,12 +49,10 @@
     }]
   ],
   "variables": {
-    "core": "",
-    "guest_additions_mode": "upload",
-    "headless": "false",
+    "guest_additions_mode": "attach",
+    "headless": "true",
     "iso_url": "http://care.dlservice.microsoft.com/dl/download/evalx/win7/x64/EN/7600.16385.090713-1255_x64fre_enterprise_en-us_EVAL_Eval_Enterprise-GRMCENXEVAL_EN_DVD.iso",
     "iso_checksum_type": "md5",
-    "iso_checksum": "1d0d239a252cb53e466d39e752b17c28",
-    "autounattend": "./answer_files/7/Autounattend.xml"
+    "iso_checksum": "1d0d239a252cb53e466d39e752b17c28"
   }
 }
