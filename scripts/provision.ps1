@@ -18,7 +18,11 @@ if(Test-Path "C:\Users\vagrant\VBoxGuestAdditions.iso") {
 }
 
 Write-Host "Cleaning SxS..."
-Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
+$Version=(Get-WmiObject win32_operatingsystem).version
+if(($version -ne "6.2")) 
+    { Dism.exe /online /Cleanup-Image /ResetBase }
+else
+    { Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase }
 
 @(
     "$env:localappdata\Nuget",
@@ -71,7 +75,11 @@ Del $FilePath
 
 Write-Host "copying auto unattend file"
 mkdir C:\Windows\setup\scripts
-copy-item a:\SetupComplete-2012.cmd C:\Windows\setup\scripts\SetupComplete.cmd -Force
+$Version=(Get-WmiObject win32_operatingsystem).version
+if(($version -ne "6.2")) 
+    { copy-item a:\SetupComplete.cmd C:\Windows\setup\scripts\SetupComplete.cmd -Force }
+else
+    { copy-item a:\SetupComplete-2012.cmd C:\Windows\setup\scripts\SetupComplete.cmd -Force }
 
 mkdir C:\Windows\Panther\Unattend
 copy-item a:\postunattend.xml C:\Windows\Panther\Unattend\unattend.xml
