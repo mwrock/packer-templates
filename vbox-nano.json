@@ -23,7 +23,7 @@
       "shutdown_command": "shutdown /r /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
       "shutdown_timeout": "1h",
       "floppy_files": [
-        "answer_files/nano/Autounattend.xml",
+        "answer_files/nano/vbox/Autounattend.xml",
         "scripts/nano_create.ps1",
         "scripts/nano_cleanup.ps1",
         "scripts/SetupComplete.cmd",

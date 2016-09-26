@@ -63,7 +63,7 @@
                     <InstallFrom>
                         <MetaData wcm:action="add">
                             <Key>/IMAGE/NAME </Key>
-                            <Value>Windows Server 2016 Technical Preview 5 SERVERDATACENTERCORE</Value>
+                            <Value>Windows Server 2016 SERVERDATACENTERCORE</Value>
                         </MetaData>
                     </InstallFrom>
                     <InstallTo>
@@ -138,7 +138,7 @@
             </AutoLogon>
       <FirstLogonCommands>
         <SynchronousCommand wcm:action="add">
-           <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\nano_create.ps1</CommandLine>
+           <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\nano_hyperv_create.ps1</CommandLine>
            <Order>1</Order>
         </SynchronousCommand>
       </FirstLogonCommands>

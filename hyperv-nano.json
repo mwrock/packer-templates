@@ -1,0 +1,40 @@
+{
+  "builders": [
+    {
+      "type": "hyperv-iso",
+      "guest_additions_mode": "disable",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "md5",
+      "communicator": "winrm",
+      "disk_size": 61440,
+      "vm_name": "nano",
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "6h",
+      "switch_name": "internal_switch",
+      "shutdown_command": "shutdown /r /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "shutdown_timeout": "1h",
+      "floppy_files": [
+        "answer_files/nano/hyperv/Autounattend.xml",
+        "scripts/nano_hyperv_create.ps1",
+        "scripts/nano_cleanup.ps1",
+        "scripts/SetupComplete.cmd",
+        "scripts/postunattend.xml"
+      ]
+    }
+  ],
+  "post-processors": [
+    [{
+      "type": "vagrant",
+      "keep_input_artifact": true,
+      "output": "windowsNano-{{.Provider}}.box",
+      "vagrantfile_template": "vagrantfile-windows-nano.template"
+    }]
+  ],
+  "variables": {
+    "headless": "false",
+    "iso_checksum": "6417ba460f95bd91ded05dfacd553783",
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/8/9/2/89284B3B-BA51-49C8-90F8-59C0A58D0E70/14300.1000.160324-1723.RS1_RELEASE_SVC_SERVER_OEMRET_X64FRE_EN-US.ISO"
+  }
+}

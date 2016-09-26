@@ -13,8 +13,7 @@ New-NanoServerImage `
   -ComputerName Nano `
   -Package @('Microsoft-NanoServer-DSC-Package','Microsoft-NanoServer-IIS-Package') `
   -Containers `
-  -OEMDrivers `
-  -DeploymentType Host `
+  -DeploymentType Guest `
   -Edition Standard `
   -AdministratorPassword $adminPassword
 
