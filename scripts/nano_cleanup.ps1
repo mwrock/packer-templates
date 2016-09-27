@@ -2,6 +2,11 @@ Import-Module C:\windows\system32\windowspowershell\v1.0\Modules\Microsoft.Power
 Import-Module C:\windows\system32\windowspowershell\v1.0\Modules\Microsoft.PowerShell.Management\Microsoft.PowerShell.Management.psd1
 Import-Module C:\windows\system32\windowspowershell\v1.0\Modules\Storage\Storage.psd1
 
+$sess = New-CimInstance -Namespace root/Microsoft/Windows/WindowsUpdate -ClassName MSFT_WUOperationsSession
+Invoke-CimMethod -InputObject $sess -MethodName ApplyApplicableUpdates
+
+Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
+
 $partition = Get-Partition -DriveLetter C
 $c_size = $partition.size
 $partition = Get-Partition -DriveLetter D
