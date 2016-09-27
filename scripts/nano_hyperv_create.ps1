@@ -33,6 +33,7 @@ mkdir E:\Windows\Panther
 copy-item a:\postunattend.xml E:\Windows\Panther\unattend.xml -Force
 copy-item a:\SetupComplete.cmd E:\Windows\setup\scripts\SetupComplete.cmd -Force
 copy-item a:\nano_cleanup.ps1 E:\Windows\setup\scripts\nano_cleanup.ps1 -Force
+copy-item a:\nano_cleanup_after_reboot.ps1 E:\Windows\setup\scripts\nano_cleanup_after_reboot.ps1 -Force
 
 bcdedit /set "{current}" device "partition=E:"
 bcdedit /set "{current}" osdevice "partition=E:"

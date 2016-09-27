@@ -19,6 +19,7 @@
         "answer_files/nano/hyperv/Autounattend.xml",
         "scripts/nano_hyperv_create.ps1",
         "scripts/nano_cleanup.ps1",
+        "scripts/nano_cleanup_after_reboot.ps1",
         "scripts/SetupComplete.cmd",
         "scripts/postunattend.xml"
       ]

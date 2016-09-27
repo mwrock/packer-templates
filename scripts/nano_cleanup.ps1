@@ -5,8 +5,6 @@ Import-Module C:\windows\system32\windowspowershell\v1.0\Modules\Storage\Storage
 $sess = New-CimInstance -Namespace root/Microsoft/Windows/WindowsUpdate -ClassName MSFT_WUOperationsSession
 Invoke-CimMethod -InputObject $sess -MethodName ApplyApplicableUpdates
 
-Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
-
 $partition = Get-Partition -DriveLetter C
 $c_size = $partition.size
 $partition = Get-Partition -DriveLetter D
@@ -15,28 +13,5 @@ $d_size = $partition.size
 Remove-Partition -DriveLetter D -Confirm:$false
 Resize-Partition -DriveLetter C -Size ($c_size + $d_size)
 
-Optimize-Volume -DriveLetter C
-
-$FilePath="c:\zero.tmp"
-$Volume= Get-Volume -DriveLetter C
-$ArraySize= 64kb
-$SpaceToLeave= $Volume.Size * 0.05
-$FileSize= $Volume.SizeRemaining - $SpacetoLeave
-$ZeroArray= new-object byte[]($ArraySize)
- 
-$Stream= [io.File]::OpenWrite($FilePath)
-try {
-   $CurFileSize = 0
-    while($CurFileSize -lt $FileSize) {
-        $Stream.Write($ZeroArray,0, $ZeroArray.Length)
-        $CurFileSize +=$ZeroArray.Length
-    }
-} finally {
-    if($Stream) {
-        $Stream.Close()
-    }
-}
- 
-Del $FilePath
-
-shutdown /s /t 0
+schtasks /create /tn "Postinstall" /tr "powershell -file c:\windows\setup\scripts\nano_cleanup_after_reboot.ps1" /sc onstart /RL highest /ru vagrant /rp vagrant /f
+shutdown /r /t 0

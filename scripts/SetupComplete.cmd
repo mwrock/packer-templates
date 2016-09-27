@@ -5,4 +5,4 @@ REG ADD HKLM\Software\Microsoft\Windows\CurrentVersion\WSMAN\Client /v auth_basi
 netsh advfirewall firewall set rule group="File and Printer Sharing" new enable=yes
 wmic useraccount where "name='vagrant'" set PasswordExpires=FALSE
 
-cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -command . c:\windows\setup\scripts\nano_cleanup.ps1 > c:\windows\setup\scripts\cleanup.txt
+cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -command . c:\windows\setup\scripts\nano_cleanup.ps1 > c:\windows\setup\scripts\cleanup1.txt
