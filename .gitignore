@@ -6,3 +6,5 @@ output-qemu
 *.box
 .kitchen
 vendor
+Vagrantfile
+.vagrant/

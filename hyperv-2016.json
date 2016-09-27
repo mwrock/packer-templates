@@ -7,6 +7,7 @@
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "md5",
       "ram_size_mb": 2048,
+      "vm_name": "2016min",
       "communicator": "winrm",
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
@@ -39,7 +40,8 @@
       "elevated_password": "vagrant"
     },
     {
-      "type": "windows-restart"
+      "type": "windows-restart",
+      "restart_timeout": "15m"
     },
     {
       "type": "powershell",
