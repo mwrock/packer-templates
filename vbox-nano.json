@@ -57,6 +57,7 @@
         "answer_files/nano/Autounattend.xml",
         "scripts/nano_create.ps1",
         "scripts/nano_cleanup.ps1",
+        "scripts/nano_cleanup_after_reboot.ps1",
         "scripts/SetupComplete.cmd",
         "scripts/postunattend.xml"
       ]
