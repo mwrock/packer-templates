@@ -64,7 +64,8 @@
         "packer-templates::add_postunattend",
         "packer-templates::add_pagefile",
         "packer-templates::set_local_account_token_filter_policy",
-        "packer-templates::remove_dirs"
+        "packer-templates::remove_dirs",
+        "packer-templates::add_setup_complete"
       ]
     },
     {
