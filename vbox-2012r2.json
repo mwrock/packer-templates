@@ -44,6 +44,9 @@
         [ "modifyvm", "{{.Name}}", "--vram", "36" ],
         [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
       ],
+      "vboxmanage_post": [
+        [ "storageattach", "{{.Name}}", "--storagectl", "IDE Controller", "--port", "1", "--device", "0", "--medium", "none" ]
+      ],
       "guest_os_type": "Windows2012_64",
       "headless": "{{ user `headless` }}",
       "iso_url": "{{ user `iso_url` }}",
