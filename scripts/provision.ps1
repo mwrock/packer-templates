@@ -8,6 +8,7 @@ if(Test-Path "e:/VBoxWindowsAdditions.exe") {
     Write-Host "Installing Guest Additions"
     certutil -addstore -f "TrustedPublisher" A:\oracle.cer
 
+    mkdir "C:\Windows\Temp\virtualbox" -ErrorAction SilentlyContinue
     Start-Process -FilePath "e:/VBoxWindowsAdditions.exe" -ArgumentList "/S" -WorkingDirectory "C:\Windows\Temp\virtualbox" -Wait
 
     Remove-Item C:\Windows\Temp\virtualbox -Recurse -Force
