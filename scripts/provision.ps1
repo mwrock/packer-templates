@@ -4,7 +4,7 @@ $ErrorActionPreference = "Stop"
 Write-Host "Enabling file sharing firewall rules"
 netsh advfirewall firewall set rule group="File and Printer Sharing" new enable=yes
 
-if(Test-Path "C:\Users\vagrant\VBoxGuestAdditions.iso") {
+if(Test-Path "e:/VBoxWindowsAdditions.exe") {
     Write-Host "Installing Guest Additions"
     certutil -addstore -f "TrustedPublisher" A:\oracle.cer
 
