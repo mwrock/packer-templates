@@ -14,6 +14,7 @@
       "communicator": "winrm",
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
+      "winrm_port": 55985,
       "winrm_timeout": "8h",
       "shutdown_command": "a:/PackerShutdown.bat",
       "shutdown_timeout": "15m",
