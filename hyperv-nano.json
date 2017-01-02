@@ -11,7 +11,6 @@
       "vm_name": "nano",
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
-      "winrm_port": 55985,
       "winrm_timeout": "6h",
       "switch_name": "internal_switch",
       "shutdown_command": "shutdown /r /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
