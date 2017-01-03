@@ -6,7 +6,9 @@ netsh advfirewall firewall set rule group="File and Printer Sharing" new enable=
 
 if(Test-Path "e:/VBoxWindowsAdditions.exe") {
     Write-Host "Installing Guest Additions"
-    certutil -addstore -f "TrustedPublisher" A:\oracle.cer
+    Get-ChildItem E:\cert\ -Filter vbox*.cer | ForEach-Object {
+        E:\cert\VBoxCertUtil.exe add-trusted-publisher $_.FullName --root $_.FullName
+    }
 
     mkdir "C:\Windows\Temp\virtualbox" -ErrorAction SilentlyContinue
     Start-Process -FilePath "e:/VBoxWindowsAdditions.exe" -ArgumentList "/S" -WorkingDirectory "C:\Windows\Temp\virtualbox" -Wait
@@ -63,7 +65,7 @@ finally {
         $Stream.Close()
     }
 }
- 
+
 Del $FilePath
 
 Write-Host "copying auto unattend file"
