@@ -28,7 +28,6 @@
       "shutdown_timeout": "15m",
       "floppy_files": [
         "answer_files/2012_r2{{user `core`}}/Autounattend.xml",
-        "scripts/oracle.cer",
         "scripts/postunattend.xml",
         "scripts/boxstarter.ps1",
         "scripts/PackerShutdown.bat",
@@ -63,7 +62,6 @@
       "shutdown_timeout": "15m",
       "floppy_files": [
         "answer_files/2012_r2{{user `core`}}/Autounattend.xml",
-        "scripts/oracle.cer",
         "scripts/postunattend.xml",
         "scripts/boxstarter.ps1",
         "scripts/PackerShutdown.bat",
