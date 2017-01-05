@@ -7,8 +7,8 @@ This repo and much of its content are covered in detail from [this blog post](ht
 
 You need the following to run the template:
 
-1. [Packer](https://packer.io/docs/installation.html) installed with a minimum version of 0.8.6.
-2. [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+1. [Packer](https://packer.io/docs/installation.html) installed with a minimum version of 0.12.1.
+2. [VirtualBox](https://www.virtualbox.org/wiki/Downloads) - Tested with 5.1.12
 3. [Berkshelf](http://berkshelf.com/) - Used to find and vendor Chef cookbook dependencies. This is easist installing via the [ChefDK](https://downloads.chef.io/chef-dk/)
 
 ## Vendoring the cookbooks
