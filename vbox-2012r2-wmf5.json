@@ -8,6 +8,9 @@
         [ "modifyvm", "{{.Name}}", "--vram", "48" ],
         [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
       ],
+      "vboxmanage_post": [
+        [ "storageattach", "{{.Name}}", "--storagectl", "IDE Controller", "--port", "1", "--device", "0", "--medium", "none" ]
+      ],
       "guest_additions_mode": "{{ user `guest_additions_mode` }}",
       "guest_additions_path": "C:/users/vagrant/VBoxGuestAdditions.iso",
       "guest_os_type": "Windows2012_64",
@@ -40,6 +43,9 @@
         [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
         [ "modifyvm", "{{.Name}}", "--vram", "36" ],
         [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
+      ],
+      "vboxmanage_post": [
+        [ "storageattach", "{{.Name}}", "--storagectl", "IDE Controller", "--port", "1", "--device", "0", "--medium", "none" ]
       ],
       "guest_os_type": "Windows2012_64",
       "headless": "{{ user `headless` }}",
