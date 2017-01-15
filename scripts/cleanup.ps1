@@ -35,4 +35,4 @@ finally {
     }
 }
  
-Del $FilePath
+Remove-Item $FilePath
