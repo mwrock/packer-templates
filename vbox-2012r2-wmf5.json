@@ -3,7 +3,6 @@
     {
       "type": "virtualbox-iso",
       "vboxmanage": [
-        [ "modifyvm", "{{.Name}}", "--natpf1", "guest_winrm,tcp,,55985,,5985" ],
         [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
         [ "modifyvm", "{{.Name}}", "--vram", "48" ],
         [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
@@ -21,7 +20,6 @@
       "communicator": "winrm",
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
-      "winrm_port": 55985,
       "winrm_timeout": "12h",
       "shutdown_command": "a:/PackerShutdown.bat",
       "shutdown_timeout": "15m",
