@@ -6,7 +6,7 @@
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "md5",
-      "ram_size_mb": 2048,
+      "ram_size": 2048,
       "vm_name": "2016min",
       "communicator": "winrm",
       "winrm_username": "vagrant",
