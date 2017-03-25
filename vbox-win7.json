@@ -2,7 +2,6 @@
     "builders": [{
     "type": "virtualbox-iso",
     "vboxmanage": [
-      [ "modifyvm", "{{.Name}}", "--natpf1", "winrm,tcp,,55985,,5985" ],
       [ "modifyvm", "{{.Name}}", "--memory", "5120" ],
       [ "modifyvm", "{{.Name}}", "--vram", "36" ],
       [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
@@ -15,7 +14,6 @@
     "headless": "{{ user `headless` }}",    
     "winrm_username": "vagrant",
     "winrm_password": "vagrant",
-    "winrm_port": 55985,
     "winrm_timeout": "24h",
     "shutdown_command": "C:/windows/system32/sysprep/sysprep.exe /generalize /oobe /unattend:C:/Windows/Panther/Unattend/unattend.xml /quiet /shutdown",
     "shutdown_timeout": "15m",

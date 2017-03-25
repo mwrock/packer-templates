@@ -3,7 +3,6 @@
     {
       "type": "virtualbox-iso",
       "vboxmanage": [
-        [ "modifyvm", "{{.Name}}", "--natpf1", "guest_winrm,tcp,,55985,,5985" ],
         [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
         [ "modifyvm", "{{.Name}}", "--vram", "36" ],
         [ "modifyvm", "{{.Name}}", "--cpus", "2" ],
@@ -17,7 +16,6 @@
       "disk_size": 61440,
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
-      "winrm_port": 55985,
       "winrm_timeout": "6h",
       "guest_additions_mode": "disable",
       "headless": "{{ user `headless` }}",    
@@ -36,7 +34,6 @@
       "name": "virtualbox-iso-atlas",
       "type": "virtualbox-iso",
       "vboxmanage": [
-        [ "modifyvm", "{{.Name}}", "--natpf1", "guest_winrm,tcp,,55985,,5985" ],
         [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
         [ "modifyvm", "{{.Name}}", "--vram", "36" ],
         [ "modifyvm", "{{.Name}}", "--cpus", "2" ],
