@@ -1,13 +1,12 @@
-dsc_resource "Install Oracle Cert" do
-  resource :xCertificateImport
-  property :Thumbprint, "7e92b66be51b79d8ce3ff25c15c2df6ab8c7f2f2"
-  property :Store, "TrustedPublisher"
-  property :Location, "LocalMachine"
-  property :Path, "e:/cert/vbox-sha1.cer"
-end
+powershell_script 'install vbox guest additions' do
+  code <<-EOH
+    Get-ChildItem E:/cert/ -Filter vbox*.cer | ForEach-Object {
+        E:/cert/VBoxCertUtil.exe add-trusted-publisher $_.FullName --root $_.FullName
+    }
 
-package "virtual box guest additions" do
-  source "e:/VBoxWindowsAdditions.exe"
-  installer_type :custom
-  options "/S"
+    mkdir "C:/Windows/Temp/virtualbox" -ErrorAction SilentlyContinue
+    Start-Process -FilePath "e:/VBoxWindowsAdditions.exe" -ArgumentList "/S" -WorkingDirectory "C:/Windows/Temp/virtualbox" -Wait
+
+    Remove-Item C:/Windows/Temp/virtualbox -Recurse -Force
+  EOH
 end
