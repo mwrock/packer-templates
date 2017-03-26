@@ -3,7 +3,7 @@
     {
       "type": "hyperv-iso",
       "guest_additions_mode": "disable",
-      "ram_size_mb": 2048,
+      "ram_size": 2048,
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",

@@ -7,7 +7,7 @@ This repo and much of its content are covered in detail from [this blog post](ht
 
 You need the following to run the template:
 
-1. [Packer](https://packer.io/docs/installation.html) installed with a minimum version of 0.12.1.
+1. [Packer](https://packer.io/docs/installation.html) installed with a minimum version of 0.12.3.
 2. [VirtualBox](https://www.virtualbox.org/wiki/Downloads) - Tested with 5.1.12
 3. [Berkshelf](http://berkshelf.com/) - Used to find and vendor Chef cookbook dependencies. This is easist installing via the [ChefDK](https://downloads.chef.io/chef-dk/)
 
@@ -24,11 +24,11 @@ Invoke `packer` to run a template like this:
 ```
 packer build -force -only virtualbox-iso .\vbox-2016.json
 ```
-## Using the Hyper-V templates
-The Hyper-V templates use the Hyper-V builder currently in [Taliesin Sisson's](https://github.com/taliesins) PR [#2576](https://github.com/mitchellh/packer/pull/2576) to the [packer repo](https://github.com/mitchellh/packer). See [this post](http://www.hurryupandwait.io/blog/creating-hyper-v-images-with-packer) with full instructions on building and using this PR.
+## Hyper-V templates
+The Hyper-V templates now use the official Hyper-V builder available in the latest versions of packer. I no longer convert Virtual Box images to Hyper-V.
 
 ## Converting to Hyper-V
-This repo includes PowerShell scripts that can create a Hyper-V Vagrant box from the output VirtualBox .vmdk file. This repo leverages [psake](https://github.com/psake/psake) and [Chocolatey](https://chocolatey.org) to ensure that all prerequisites are installed and then runs the above `packer` command followed by the scripts needed to produce a Vagrant .box file that can create a Hyper-V file.
+As stated above, I no longer convert VirtualBox images to Hyper-V. However that can be useful if you are limited to mac or linux hardware for creating images. This repo includes PowerShell scripts that can create a Hyper-V Vagrant box from the output VirtualBox .vmdk file. This repo leverages [psake](https://github.com/psake/psake) and [Chocolatey](https://chocolatey.org) to ensure that all prerequisites are installed and then runs the above `packer` command followed by the scripts needed to produce a Vagrant .box file that can create a Hyper-V file.
 
 See [this blog post](http://www.hurryupandwait.io/blog/creating-a-hyper-v-vagrant-box-from-a-virtualbox-vmdk-or-vdi-image) for more detail on converting VirtualBox disks to Hyper-V.
 
