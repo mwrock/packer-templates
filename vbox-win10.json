@@ -1,0 +1,42 @@
+{
+    "builders": [{
+    "type": "virtualbox-iso",
+    "vboxmanage": [
+      [ "modifyvm", "{{.Name}}", "--memory", "3072" ],
+      [ "modifyvm", "{{.Name}}", "--vram", "36" ],
+      [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
+    ],
+    "guest_os_type": "Windows10_64",
+    "iso_url": "{{ user `iso_url` }}",
+    "iso_checksum": "{{ user `iso_checksum` }}",
+    "iso_checksum_type": "sha1",
+    "communicator": "winrm",
+    "headless": "{{ user `headless` }}",    
+    "winrm_username": "vagrant",
+    "winrm_password": "vagrant",
+    "winrm_timeout": "24h",
+    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+    "shutdown_timeout": "2h",
+    "floppy_files": [
+      "answer_files/win10/Autounattend.xml",
+      "answer_files/win10/postunattend.xml",
+      "scripts/boxstarter.ps1",
+      "scripts/package.ps1",
+      "scripts/Test-Command.ps1"
+    ]
+  }],
+    "post-processors": [
+    {
+      "type": "vagrant",
+      "keep_input_artifact": true,
+      "output": "windows10-{{.Provider}}.box",
+      "vagrantfile_template": "vagrantfile-windows_10.template"
+    }
+  ],
+  "variables": {
+    "headless": "false",
+    "iso_checksum": "6848257808486def0c988a270f972533f470b54a",
+    "iso_checksum_type": "sha-1",
+    "iso_url": "iso/en_windows_10_n_multiple_editions_version_1703_updated_march_2017_x64_dvd_10189287.iso"
+  }
+}
