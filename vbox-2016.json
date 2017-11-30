@@ -8,7 +8,7 @@
         [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
       ],
       "guest_additions_mode": "{{ user `guest_additions_mode` }}",
-      "guest_os_type": "Windows2012_64",
+      "guest_os_type": "Windows2016_64",
       "headless": "{{ user `headless` }}",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
