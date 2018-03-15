@@ -24,7 +24,7 @@
   "provisioners": [
     {
       "type": "chef-solo",
-      "cookbook_paths": ["cookbooks", "vendor/cookbooks"],
+      "cookbook_paths": ["cookbooks", "cookbooks"],
       "guest_os_type": "windows",
       "run_list": [
         "wsus-client::configure",
