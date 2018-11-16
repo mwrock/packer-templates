@@ -18,7 +18,7 @@
       "winrm_password": "vagrant",
       "winrm_timeout": "12h",
       "shutdown_command": "C:/Windows/Panther/Unattend/packer_shutdown.bat",
-      "shutdown_timeout": "15m",
+      "shutdown_timeout": "1h",
       "floppy_files": [
         "answer_files/2016/Autounattend.xml",
         "scripts/winrm.ps1"
