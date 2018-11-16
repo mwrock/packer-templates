@@ -6,5 +6,4 @@ description 'Resources run during packer builds'
 long_description 'Resources run during packer builds'
 version '0.1.0'
 
-depends 'windows'
 depends 'wsus-client'
