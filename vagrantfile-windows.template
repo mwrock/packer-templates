@@ -1,11 +1,23 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+$script = <<SCRIPT
+netsh advfirewall firewall add rule name="WinRM-HTTP" dir=in localport=5985 protocol=TCP action=allow
+netsh advfirewall firewall add rule name="WinRM-HTTPS" dir=in localport=5986 protocol=TCP action=allow
+$c = New-SelfSignedCertificate -DnsName "192.168.253.253" -CertStoreLocation cert:\\LocalMachine\\My
+winrm create winrm/config/Listener?Address=*+Transport=HTTPS "@{Hostname=`"192.168.253.253`";CertificateThumbprint=`"$($c.ThumbPrint)`"}"
+netsh advfirewall firewall add rule name="WinRM-HTTPS" dir=in localport=5986 protocol=TCP action=allow
+iwr https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1 -UseBasicParsing | iex
+SCRIPT
+
 Vagrant.configure(2) do |config|
   config.vm.guest = :windows
   config.vm.communicator = "winrm"
   config.vm.boot_timeout = 300
   config.vm.network :forwarded_port, guest: 3389, host: 3389, id: 'rdp', auto_correct: true
+
+  config.vm.network "private_network", ip:"192.168.253.253"
+  config.vm.provision "shell", inline: $script
 
   config.vm.provider "virtualbox" do |vb|
     vb.gui = true
