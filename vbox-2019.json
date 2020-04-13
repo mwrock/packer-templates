@@ -8,11 +8,11 @@
         [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
       ],
       "guest_additions_mode": "{{ user `guest_additions_mode` }}",
-      "guest_os_type": "Windows2016_64",
+      "guest_os_type": "Windows2019_64",
       "headless": "{{ user `headless` }}",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "md5",
+      "iso_checksum_type": "sha256",
       "communicator": "winrm",
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
@@ -20,7 +20,7 @@
       "shutdown_command": "C:/Windows/Panther/Unattend/packer_shutdown.bat",
       "shutdown_timeout": "15m",
       "floppy_files": [
-        "answer_files/2016/Autounattend.xml",
+        "answer_files/2019/Autounattend.xml",
         "scripts/winrm.ps1"
       ]
     }
@@ -83,14 +83,14 @@
     {
       "type": "vagrant",
       "keep_input_artifact": true,
-      "output": "windows2016min-{{.Provider}}.box",
+      "output": "windows2019min-{{.Provider}}.box",
       "vagrantfile_template": "vagrantfile-windows.template"
     }
   ],
   "variables": {
     "guest_additions_mode": "attach",
     "headless": "true",
-    "iso_checksum": "18a4f00a675b0338f3c7c93c4f131beb",
-    "iso_url": "http://care.dlservice.microsoft.com/dl/download/1/6/F/16FA20E6-4662-482A-920B-1A45CF5AAE3C/14393.0.160715-1616.RS1_RELEASE_SERVER_EVAL_X64FRE_EN-US.ISO"
+    "iso_checksum": "57faf4a2ea4484cfdf5e964c539313c061c4d9cac474e723d60405f2ea02d570",
+    "iso_url": "https://software-download.microsoft.com/download/sg/17763.253.190108-0006.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_en-us.iso"
   }
 }

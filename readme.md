@@ -24,6 +24,13 @@ Invoke `packer` to run a template like this:
 ```
 packer build -force -only virtualbox-iso .\vbox-2016.json
 ```
+
+## Add image to Vagrant
+To add the exported Vagrant box, run:
+```
+vagrant box add windows-2016 .\windows2016min-virtualbox.box
+```
+
 ## Hyper-V templates
 The Hyper-V templates now use the official Hyper-V builder available in the latest versions of packer. I no longer convert Virtual Box images to Hyper-V.
 
